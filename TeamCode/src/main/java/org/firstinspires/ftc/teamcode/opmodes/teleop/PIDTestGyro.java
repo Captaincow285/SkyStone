@@ -1,25 +1,31 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 import org.firstinspires.ftc.teamcode.lib.util.PIDController;
 
 import static org.firstinspires.ftc.teamcode.lib.hardware.base.DriveTrain.PIDa;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldAngle_rad;
-import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.movement_turn;
-import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.movement_x;
-import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.movement_y;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
+@Config
 @TeleOp(name = "PIDTestGyro", group = "kms")
 public class PIDTestGyro extends Robot {
 
-  double kp = 1;
+  public static double kp = 1;
 
-  double setpoint= 0;
+  public static double setpoint= 0;
 
   PIDController pid = new PIDController(kp, 0, 0);
+
+  FtcDashboard dashboard = FtcDashboard.getInstance();
+  TelemetryPacket packet = new TelemetryPacket();
+
 
   @Override
   public void init() {
@@ -40,7 +46,7 @@ public class PIDTestGyro extends Robot {
 
     super.loop();
 
-    movement_turn = pid.getOutput(Math.toDegrees(worldAngle_rad), setpoint);
+    movement_turn = -pid.getOutput(Math.toDegrees(worldAngle_rad), setpoint);
 
     if(gamepad1.a){
       setpoint = 0;
@@ -60,10 +66,11 @@ public class PIDTestGyro extends Robot {
 
     pid.setP(kp);
 
-    telemetry.addData("kp", pid.P);
 
-    telemetry.update();
 
+    packet.put("kP", kp);
+    packet.put("wa", Math.toDegrees(worldAngle_rad));
+    dashboard.sendTelemetryPacket(packet);
   }
 
 

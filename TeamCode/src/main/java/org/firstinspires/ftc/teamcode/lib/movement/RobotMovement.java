@@ -14,7 +14,6 @@ import static org.firstinspires.ftc.teamcode.lib.util.MathFunctions.AngleWrap;
 import static org.firstinspires.ftc.teamcode.lib.util.MathFunctions.lineCircleIntersection;
 
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.*;
 
 
 public class RobotMovement {
@@ -106,7 +105,7 @@ public class RobotMovement {
 
         movement_x = PIDx.getOutput(worldXPosition, xTarget);
         movement_y = PIDy.getOutput(worldYPosition, yTarget);
-        movement_turn = -PIDa.getOutput(worldAngle_rad, aTarget);
+        movement_turn = -PIDa.getOutput(Math.toDegrees(worldAngle_rad), aTarget);
 
     }
 
@@ -121,7 +120,7 @@ public class RobotMovement {
 
         xTarget = point.x;
         yTarget = point.y;
-        aTarget = Math.toRadians(angle);
+        aTarget = angle;
 
     }
 
@@ -129,7 +128,7 @@ public class RobotMovement {
 
         xTarget = position.getX();
         yTarget = position.getY();
-        aTarget = Math.toRadians(position.getA());
+        aTarget = position.getA();
 
     }
 

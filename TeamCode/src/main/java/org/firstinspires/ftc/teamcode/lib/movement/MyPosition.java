@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.lib.movement;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 
-import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.strafeConstant;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 public class MyPosition {
 
@@ -24,9 +24,9 @@ public class MyPosition {
 
   public static double lastAngle = 0;
 
-  public static double worldXPosition = 0.0;
+  /*public static double worldXPosition = 0.0;
   public static double worldYPosition = 0.0;
-  public static double worldAngle_rad = 0.0;
+  public static double worldAngle_rad = 0.0;*/
 
   public static double currPos_l = 0;
   public static double currPos_r = 0;

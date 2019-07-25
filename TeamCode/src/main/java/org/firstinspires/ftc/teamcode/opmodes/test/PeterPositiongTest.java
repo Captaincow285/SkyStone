@@ -11,9 +11,7 @@ import org.openftc.revextensions2.ExpansionHubMotor;
 import org.openftc.revextensions2.RevBulkData;
 import org.openftc.revextensions2.RevExtensions2;
 
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldAngle_rad;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldXPosition;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldYPosition;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.goToPosition;
 
 @Autonomous

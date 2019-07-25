@@ -18,9 +18,6 @@ import org.openftc.revextensions2.RevExtensions2;
 
 import java.io.File;
 
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldXPosition;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldYPosition;
-import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.manualControl;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 @Autonomous

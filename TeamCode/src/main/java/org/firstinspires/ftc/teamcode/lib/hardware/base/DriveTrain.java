@@ -43,9 +43,9 @@ public class DriveTrain {
   //last update time
   private long lastUpdateTime = 0;
 
-  public static PIDController PIDx = new PIDController(0.05, 0, 0);
-  public static PIDController PIDy = new PIDController(0.05, 0, 0);
-  public static PIDController PIDa = new PIDController(0.50, 0, 0);
+  public static PIDController PIDx = new PIDController(xKp, xKi, xKd);
+  public static PIDController PIDy = new PIDController(yKp, yKi, yKd);
+  public static PIDController PIDa = new PIDController(aKp, aKi, aKd);
 
   double xPower = 0;
   double yPower = 0;

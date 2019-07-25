@@ -10,8 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldXPosition;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldYPosition;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 
 public class InputManager {

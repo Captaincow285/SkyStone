@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
@@ -13,6 +14,7 @@ import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.applyTar
 import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.setTarget;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
+@Config
 @Autonomous
 public class GoToPoint extends Robot {
 
@@ -71,19 +73,19 @@ public class GoToPoint extends Robot {
       }
       case MOVE:{
 
-        setTarget(new Position(30, 30, 90));
+        setTarget(new Position(0, 0, 90));
 
         if(roboState == RobotStates.AT_TARGET) {
-          autoState = AutoStates.END;
+          //autoState = AutoStates.END;
         }
         break;
       }
       case MOVE2:{
 
-        setTarget(new Position(0,0, Math.toRadians(90)));
+        setTarget(new Position(30,30,90));
 
         if(roboState == RobotStates.AT_TARGET) {
-          autoState = AutoStates.MOVE3;
+          //autoState = AutoStates.MOVE3;
         }
         break;
       }
@@ -92,7 +94,7 @@ public class GoToPoint extends Robot {
         setTarget(new Position(0,30,0));
 
         if(roboState == RobotStates.AT_TARGET) {
-          autoState = AutoStates.MOVE4;
+          //autoState = AutoStates.MOVE4;
         }
         break;
       }
@@ -101,7 +103,7 @@ public class GoToPoint extends Robot {
         setTarget(new Position(0,0,0));
 
         if(roboState == RobotStates.AT_TARGET) {
-          autoState = AutoStates.END;
+          //autoState = AutoStates.END;
         }
         break;
       }

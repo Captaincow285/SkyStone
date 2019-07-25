@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.lib.hardware.base;
 
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -20,9 +22,6 @@ import org.openftc.revextensions2.RevExtensions2;
 import java.text.DecimalFormat;
 
 import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.AngleWrap;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldAngle_rad;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldXPosition;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.worldYPosition;
 import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.applyTarget;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
@@ -45,6 +44,9 @@ public class Robot extends OpMode{
   private RevMotor[] motors;
 
   public DriveTrain dt = new DriveTrain();
+
+  FtcDashboard dashboard = FtcDashboard.getInstance();
+  TelemetryPacket packet = new TelemetryPacket();
 
   @Override
   public void init() {
@@ -105,6 +107,13 @@ public class Robot extends OpMode{
 
     telemetry.update();*/
 
+    packet.put("wx", worldXPosition);
+    packet.put("wy", worldYPosition);
+    packet.put("wa", Math.toDegrees(worldAngle_rad));
+    packet.put("autostate", autoState);
+    packet.put("robot state", roboState);
+
+    dashboard.sendTelemetryPacket(packet);
 
   }
 
