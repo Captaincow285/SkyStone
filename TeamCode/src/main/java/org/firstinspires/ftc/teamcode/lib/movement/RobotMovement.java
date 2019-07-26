@@ -124,11 +124,11 @@ public class RobotMovement {
 
     }
 
-    public static void setTarget(Position position){
+    public static void setTarget(Pose pose){
 
-        xTarget = position.getX();
-        yTarget = position.getY();
-        aTarget = position.getA();
+        xTarget = pose.x;
+        yTarget = pose.y;
+        aTarget = pose.a;
 
     }
 

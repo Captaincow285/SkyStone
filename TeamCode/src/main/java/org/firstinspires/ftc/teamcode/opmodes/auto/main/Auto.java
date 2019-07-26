@@ -1,18 +1,16 @@
-package org.firstinspires.ftc.teamcode.opmodes.auto;
+package org.firstinspires.ftc.teamcode.opmodes.auto.main;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 import org.firstinspires.ftc.teamcode.lib.movement.CurvePoint;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
+import org.firstinspires.ftc.teamcode.lib.movement.Pose;
 
 import java.util.ArrayList;
 
 import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.followCurve;
-import static org.firstinspires.ftc.teamcode.opmodes.auto.Auto.AutoStates.*;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.*;
-import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
+import static org.firstinspires.ftc.teamcode.opmodes.auto.main.Auto.AutoStates.*;
 
 
 @Autonomous (group = "main")
@@ -40,7 +38,7 @@ public class Auto extends Robot {
 
       case START: {
 
-        MyPosition.setPosition(0, 0, 0);
+        Pose.setPose(0, 0, 0);
 
         allPoints = new ArrayList<>();
 

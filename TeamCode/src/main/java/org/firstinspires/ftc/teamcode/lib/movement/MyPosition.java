@@ -133,6 +133,56 @@ public class MyPosition {
 
   }
 
+  //dX = e0 - (dTheta * y0), dY = e1 - (dTheta * x0), and dTheta = imu_delta
+  public static void PosCalcArnav2(double r, double a) {
+
+    double currentAngle = worldAngle_rad;
+
+    currPos_r = r;
+    currPos_a = -a;
+
+    double thetaDelta = currentAngle - lastAngle;
+
+
+    double wheelRightCurrent = currPos_r;
+    double wheelAuxCurrent = currPos_a;
+
+    double rightCM = wheelRightCurrent * cmPerTick;
+    double auxCM = wheelAuxCurrent * cmPerTick;
+
+    double wheelRightDelta = wheelRightCurrent - wheelRightLast;
+    double wheelAuxDelta = wheelAuxCurrent - wheelAuxLast;
+
+    double rightDeltaCM = wheelRightDelta * cmPerTick;
+    double auxDeltaCM = wheelAuxDelta * cmPerTick;
+
+    //this doenst make sense my guy arnav
+    //double deltaX = auxDeltaCM - (thetaDelta * 7.5);
+    double deltaX = auxDeltaCM - (thetaDelta * strafeConstant);
+    double deltaY = rightDeltaCM;
+
+    //worldXPosition += deltaX;
+    //worldYPosition += deltaY;
+    rightCM += deltaY;
+    auxCM += deltaX;
+
+    worldXPosition = (Math.cos(worldAngle_rad) * rightCM) + (Math.sin(worldAngle_rad) *
+        auxCM);
+    worldYPosition = (Math.sin(worldAngle_rad) * rightCM) - (Math.cos(worldAngle_rad) *
+        auxCM);
+
+
+    lastAngle = worldAngle_rad;
+
+    //save the last positions for later
+    wheelRightLast = wheelRightCurrent;
+    wheelAuxLast = wheelAuxCurrent;
+
+
+
+
+  }
+
   public static void PosCalcNiceWebsite(double r, double a){
 
     double lastAngle = 0;

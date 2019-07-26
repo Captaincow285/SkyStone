@@ -1,12 +1,11 @@
-package org.firstinspires.ftc.teamcode.opmodes.auto;
+package org.firstinspires.ftc.teamcode.opmodes.auto.test;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
-import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
 import org.firstinspires.ftc.teamcode.lib.movement.Point;
-import org.firstinspires.ftc.teamcode.lib.movement.Position;
+import org.firstinspires.ftc.teamcode.lib.movement.Pose;
 
 import java.util.ArrayList;
 
@@ -14,18 +13,18 @@ import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.applyTar
 import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.setTarget;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
-@Config
+//@Config
 @Autonomous
 public class GoToPoint extends Robot {
 
-  ArrayList<Point> points = new ArrayList<>();
+  ArrayList<Pose> points = new ArrayList<>();
   int auto;
 
   @Override
   public void init(){
     super.init();
 
-    MyPosition.setPosition(0,0,0);
+    Pose.setPose(new Pose(0,0,0));
 
     autoState = AutoStates.START;
     auto = 0;
@@ -33,11 +32,16 @@ public class GoToPoint extends Robot {
   }
 
   @Override
+  public void start(){
+    auto = 0;
+  }
+
+  @Override
   public void loop(){
     super.loop();
 
     applyTarget();
-/*
+
 
     switch (auto){
       case 0: {
@@ -48,14 +52,14 @@ public class GoToPoint extends Robot {
 
       case 1: {
 
-        setTarget(new Point(30,30));
+        setTarget(new Pose(30,30, 0));
 
         break;
       }
 
       case 2: {
 
-        setTarget(new Point(0,0));
+        setTarget(new Pose(0,0, 0));
 
         break;
       }
@@ -63,9 +67,9 @@ public class GoToPoint extends Robot {
 
 
     }
-*/
 
-    switch (autoState){
+
+   /* switch (autoState){
       case START:{
 
         autoState = AutoStates.MOVE;
@@ -73,7 +77,7 @@ public class GoToPoint extends Robot {
       }
       case MOVE:{
 
-        setTarget(new Position(0, 0, 90));
+        setTarget(new Pose(0, 0, 90));
 
         if(roboState == RobotStates.AT_TARGET) {
           //autoState = AutoStates.END;
@@ -82,7 +86,7 @@ public class GoToPoint extends Robot {
       }
       case MOVE2:{
 
-        setTarget(new Position(30,30,90));
+        setTarget(new Pose(30,30,90));
 
         if(roboState == RobotStates.AT_TARGET) {
           //autoState = AutoStates.MOVE3;
@@ -91,7 +95,7 @@ public class GoToPoint extends Robot {
       }
       case MOVE3:{
 
-        setTarget(new Position(0,30,0));
+        setTarget(new Pose(0,30,0));
 
         if(roboState == RobotStates.AT_TARGET) {
           //autoState = AutoStates.MOVE4;
@@ -100,7 +104,7 @@ public class GoToPoint extends Robot {
       }
       case MOVE4:{
 
-        setTarget(new Position(0,0,0));
+        setTarget(new Pose(0,0,0));
 
         if(roboState == RobotStates.AT_TARGET) {
           //autoState = AutoStates.END;
@@ -112,7 +116,7 @@ public class GoToPoint extends Robot {
         stop();
 
       }
-    }
+    }*/
 
   }
 

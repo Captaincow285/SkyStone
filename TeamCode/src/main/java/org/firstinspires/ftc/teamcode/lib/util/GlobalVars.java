@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.lib.util;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,10 @@ public class GlobalVars {
     public static double aTarget = 0;
 
     public static boolean atTarget = false;
+
+    //use these to make more accurate control names
+    // i.e. if(spinIntake) rather than if(gamepad1.a)
+    public static Gamepad mainGp, auxGp;
 
     public static int auto = 0;
 
