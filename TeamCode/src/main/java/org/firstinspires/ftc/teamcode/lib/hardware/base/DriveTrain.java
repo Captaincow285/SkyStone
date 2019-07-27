@@ -19,6 +19,9 @@ import org.firstinspires.ftc.teamcode.lib.util.PIDController;
 
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
+/**
+ * represents the robot's drivebase
+ */
 public class DriveTrain{
 
   public RevMotor fl, fr, bl, br;

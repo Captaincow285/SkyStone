@@ -20,6 +20,10 @@ import java.text.DecimalFormat;
 import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.AngleWrap;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
+/**
+ * main robot class
+ * all opmodes will extend this class
+ */
 //@TeleOp
 public class Robot extends OpMode{
 

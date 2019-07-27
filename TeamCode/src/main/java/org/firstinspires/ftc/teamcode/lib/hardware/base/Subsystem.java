@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.lib.hardware.base;
 
-//any hardware class that is not the drivetrain
+/**
+ * subclass for any hardware class that is not the drivetrain
+ */
+
 public abstract class Subsystem {
 
   private static boolean enabled = true;

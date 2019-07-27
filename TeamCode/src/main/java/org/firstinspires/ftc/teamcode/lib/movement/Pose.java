@@ -5,6 +5,9 @@ import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.worldAngle_rad;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.worldXPosition;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.worldYPosition;
 
+/**
+ * represents a Pose(x,y,angle)
+ */
 public class Pose{
 
     public static double x, y, a;

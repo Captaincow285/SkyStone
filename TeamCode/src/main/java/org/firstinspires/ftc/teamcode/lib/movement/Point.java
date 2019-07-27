@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.lib.movement;
 
+/**
+ * represents a Point(x,y)
+ */
 public class Point{
 
   public double x, y;

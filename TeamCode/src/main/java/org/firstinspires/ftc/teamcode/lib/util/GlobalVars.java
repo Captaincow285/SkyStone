@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import java.util.ArrayList;
 
+/**
+ * Global variables used throughout classes
+ * these need to be used by more than one class at a time
+ */
 @Config
 public class GlobalVars {
 
