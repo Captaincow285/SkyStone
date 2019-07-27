@@ -49,7 +49,12 @@ public class Robot extends OpMode{
     //revSlave = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 5");
 
     motors = new RevMotor[]{new RevMotor((ExpansionHubMotor) hardwareMap.get("fl"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("fr"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("bl"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("br"),true)};
-
+    
+    //stores gamepads in global variables
+    if(!isAuto){
+      getGamepads(gamepad1, gamepad2);
+    }
+    
     dt.initMotors(motors);
     dt.initGyro(hardwareMap.get(BNO055IMU.class, "imu"));
 
@@ -58,27 +63,30 @@ public class Robot extends OpMode{
   @Override
   public void loop() {
 
+    //gets sensor data
     getRevBulkData();
-
-    if(!isAuto){
-      getGamepads(gamepad1, gamepad2);
-    }
-
+    
+    //if the robot is not finished, apply the motor powers to the motors
     if(roboState != RobotStates.FINISHED) {
       dt.applyMovement();
     }
 
+    //fetch our rotation in radians from the imu
     worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
 
+    //calculate our x and y coordinates
     MyPosition.PosCalcNiceArnav(
         dt.fr.getCurrentPosition(),
         dt.bl.getCurrentPosition());
 
+    //round
     worldXPosition = Double.parseDouble(df.format(worldXPosition));
     worldYPosition = Double.parseDouble(df.format(worldYPosition));
 
-
+    //update our auto states
     updateAutoState();
+    
+    //update our robot states
     updateAtTarget();
 
     //telemetry.addLine("positions set!");
