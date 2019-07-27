@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * This is a simple routine to test translational drive capabilities.
  */
 @Autonomous(group = "drive")
+@Deprecated
 public class StraightTest extends LinearOpMode {
   public static double DISTANCE = 60;
 

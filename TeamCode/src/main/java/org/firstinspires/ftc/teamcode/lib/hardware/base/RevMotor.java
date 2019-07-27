@@ -27,8 +27,8 @@ public class RevMotor {
 
   /**
    * Initializes a RevMotor
-   * @param motor the motor
-   * @param master true if this is on the master expansion hub
+   * @param motor the motor object
+   * @param master true if this is on the master expansion hub, false if not
    */
   public RevMotor(ExpansionHubMotor motor, boolean master){
     myMotor = motor;
@@ -42,8 +42,8 @@ public class RevMotor {
   private double lastPower = -1.0;
 
   /**
-   * Sets the power of the motor
-   * @param power the power you want to go
+   * sets the power of the motor
+   * @param power power -1 to 1 that you want the motor to run at
    */
   public void setPower(double power){
     //double powerToApply = power * Auto.masterMotorScale;

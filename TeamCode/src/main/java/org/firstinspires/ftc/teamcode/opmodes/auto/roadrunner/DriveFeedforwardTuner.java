@@ -26,6 +26,7 @@ import static org.firstinspires.ftc.teamcode.opmodes.auto.roadrunner.DriveConsta
  *      regression.
  */
 @Autonomous(group = "drive")
+@Deprecated
 public class DriveFeedforwardTuner extends LinearOpMode {
     public static final double MAX_POWER = 0.7;
     public static final double DISTANCE = 100;

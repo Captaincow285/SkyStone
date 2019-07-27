@@ -58,12 +58,6 @@ public class RobotMovement {
 
     }
 
-    /**
-     *
-     * @param x
-     * @param y
-     * @param movementSpeed
-     */
     public static void goToPosition(double x, double y, double movementSpeed, double turnSpeed, double preferredAngle){
 
         double distToTarget = Math.hypot(x-worldXPosition, y- worldYPosition);
@@ -92,7 +86,10 @@ public class RobotMovement {
 
     }
 
-
+    /**
+     * used to control the drive base with a gamepad during teleop
+     * @param gamepad gamepad object used to control the drivebase
+     */
     public static void manualControl(Gamepad gamepad){
 
         movement_x = Range.clip(gamepad.left_stick_x, -1, 1);
@@ -101,6 +98,9 @@ public class RobotMovement {
 
     }
 
+    /**
+     * compares the current positions to their targets and calculates the movements for each movement direction/type
+     */
     public static void applyTarget(){
 
         movement_x = PIDx.getOutput(worldXPosition, xTarget);
@@ -109,6 +109,10 @@ public class RobotMovement {
 
     }
 
+    /**
+     * used to designate a new Point(x,y) target for the robot to follow
+     * @param point Point(x,y) target
+     */
     public static void setTarget(Point point){
 
         xTarget = point.x;
@@ -116,6 +120,11 @@ public class RobotMovement {
 
     }
 
+    /**
+     * used to designate a new Point(x,y) target for the robot to follow
+     * @param point Point(x,y) target
+     * @param angle target angle in double
+     */
     public static void setTarget(Point point, double angle){
 
         xTarget = point.x;
@@ -124,6 +133,10 @@ public class RobotMovement {
 
     }
 
+    /**
+     * used to designate a new Pose(x,y,a) target for the robot to follow
+     * @param pose Pose(x, y, a) target
+     */
     public static void setTarget(Pose pose){
 
         xTarget = pose.x;

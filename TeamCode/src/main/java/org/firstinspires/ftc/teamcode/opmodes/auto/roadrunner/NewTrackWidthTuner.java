@@ -24,6 +24,7 @@ import static org.firstinspires.ftc.teamcode.opmodes.auto.roadrunner.DriveConsta
  * averaged over those runs.
  */
 @Autonomous(group = "drive")
+@Deprecated
 public class NewTrackWidthTuner extends LinearOpMode {
     public static int CIRCUMFERENTIAL_DISTANCE = 500;
     public static int NUM_TRIALS = 5;

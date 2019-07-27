@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * Op mode for tuning follower PID coefficients. This is the final step in the tuning process.
  */
 @Autonomous(group = "drive")
+@Deprecated
 public class FollowerPIDTuner extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

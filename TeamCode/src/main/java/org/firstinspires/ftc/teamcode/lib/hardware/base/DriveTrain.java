@@ -15,21 +15,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.lib.recording.InputManager;
-import org.firstinspires.ftc.teamcode.lib.util.GlobalVars;
-import org.firstinspires.ftc.teamcode.lib.util.Math7571;
 import org.firstinspires.ftc.teamcode.lib.util.PIDController;
 
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
-import static org.firstinspires.ftc.teamcode.lib.util.MathFunctions.AngleWrap;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.*;
 
 public class DriveTrain{
 
   public RevMotor fl, fr, bl, br;
   public BNO055IMU imu;
-
-  private OpMode opMode;
-  private HardwareMap hardwareMap;
 
   private double[] motorPowers = new double[4];
 
@@ -41,12 +34,10 @@ public class DriveTrain{
   //last update time
   private long lastUpdateTime = 0;
 
+  //pid controller objects
   public static PIDController PIDx = new PIDController(xKp, xKi, xKd);
   public static PIDController PIDy = new PIDController(yKp, yKi, yKd);
   public static PIDController PIDa = new PIDController(aKp, aKi, aKd);
-
-  double xPower = 0;
-  double yPower = 0;
 
   InputManager inputManager = new InputManager();
 
@@ -60,6 +51,14 @@ public class DriveTrain{
 
   }
 
+  /**
+   * initializes the motor objects and sets some necessary details
+   * @param motors RevMotor array of the motors
+   *               fl = 0
+   *               fr = 1
+   *               bl = 2
+   *               br = 3
+   */
   public void initMotors(RevMotor[] motors) {
 
     fl = motors[0];
@@ -82,6 +81,10 @@ public class DriveTrain{
 
   }
 
+  /**
+   * initializes the imu objects
+   * @param IMU imu objects
+   */
   public void initGyro(BNO055IMU IMU){
     imu = IMU;
 
@@ -94,7 +97,11 @@ public class DriveTrain{
   }
 
 
-  // only for testing purposes
+  /**
+   * sets the forward power for all 4 motors
+   * (used only for testing)
+   * @param power
+   */
   public void setThrottle(double power){
 
       fl.setPower(power);
@@ -104,6 +111,11 @@ public class DriveTrain{
 
   }
 
+  /**
+   * sets the strafe power for all 4 motors
+   * (used only for testing)
+   * @param power
+   */
   public void strafe(double power){
 
       fl.setPower(power);
@@ -113,6 +125,9 @@ public class DriveTrain{
 
   }
 
+  /**
+   * applies the movement vars to the motors
+   */
   public void applyMovement(){
 
     motorPowers[0] =  movement_y + movement_turn + movement_x;
@@ -150,6 +165,11 @@ public class DriveTrain{
 
   }
 
+  /**
+   * gets the rotation of the imu
+   * @param unit angle unit, degrees or radians
+   * @return rotation in unit as a double
+   */
   public double getGyroRotation(AngleUnit unit) {
     return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, unit).firstAngle;
   }

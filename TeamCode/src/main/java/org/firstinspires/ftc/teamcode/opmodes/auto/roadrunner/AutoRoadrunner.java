@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 @Autonomous
+@Deprecated
 public class AutoRoadrunner extends OpMode {
 
     SampleMecanumDriveREVOptimized dt;

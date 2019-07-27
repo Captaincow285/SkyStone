@@ -79,7 +79,7 @@ public class Robot extends OpMode{
         dt.fr.getCurrentPosition(),
         dt.bl.getCurrentPosition());
 
-    //round
+    //round x and y positions
     worldXPosition = Double.parseDouble(df.format(worldXPosition));
     worldYPosition = Double.parseDouble(df.format(worldYPosition));
 
@@ -117,6 +117,11 @@ public class Robot extends OpMode{
 
   }
 
+  /**
+   * stores gamepads in global variables
+   * @param main main gamepad, used for driving the robot base
+   * @param aux auxiliary gamepad, used for driving the scoring mechanisms
+   */
   public void getGamepads(Gamepad main, Gamepad aux){
 
     mainGp = main;
@@ -124,6 +129,9 @@ public class Robot extends OpMode{
 
   }
 
+  /**
+   * updates the robot state in relation to whether or not we are at our target position or not
+   */
   private void updateAtTarget(){
     if(((worldXPosition >= xTarget -mTolerance) && (worldXPosition <= xTarget+mTolerance)) && ((worldYPosition >= yTarget -mTolerance) && (worldYPosition <= yTarget+mTolerance)) && ((Math.toDegrees(worldAngle_rad) >= aTarget - aTolerance) && (Math.toDegrees(worldAngle_rad) <= aTarget +aTolerance))){
       roboState = RobotStates.AT_TARGET;
@@ -132,6 +140,9 @@ public class Robot extends OpMode{
     }
   }
 
+  /**
+   * updates our auto state in relation to our robot state
+   */
   private void updateAutoState(){
 
     if(roboState == RobotStates.AT_TARGET){
@@ -142,7 +153,10 @@ public class Robot extends OpMode{
     }
   }
 
-
+  /**
+   * denotes whether or not the opmode currently running is auto or not
+   * @param isAuto true if this is auto, false if it is not auto
+   */
   public void isAuto(boolean isAuto){
     this.isAuto = isAuto;
   }

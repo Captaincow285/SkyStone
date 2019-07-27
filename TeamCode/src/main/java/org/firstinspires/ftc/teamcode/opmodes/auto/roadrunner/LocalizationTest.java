@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * encoder localizer heading may be significantly off if the track width has not been tuned).
  */
 @TeleOp(group = "drive")
+@Deprecated
 public class LocalizationTest extends LinearOpMode {
   @Override
   public void runOpMode() throws InterruptedException {

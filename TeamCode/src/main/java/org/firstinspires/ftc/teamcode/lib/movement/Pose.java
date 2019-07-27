@@ -19,6 +19,12 @@ public class Pose{
 
     public static double lastAngle = 0;
 
+    /**
+     *
+     * @param x x position
+     * @param y y position
+     * @param a angle position
+     */
     public Pose(double x, double y, double a){
 
         this.x = x;
@@ -27,12 +33,22 @@ public class Pose{
 
     }
 
+    /**
+     * sets x, y, and a to a new Pose
+     * @param newPose new Pose(x,y,a) object
+     */
     public static void setPose(Pose newPose){
         x = newPose.x;
         y = newPose.y;
         a = newPose.a;
     }
 
+    /**
+     * sets x, y, and a to a new x, y, and a
+     * @param newX new x
+     * @param newY new y
+     * @param newA new angle
+     */
     public static void setPose(double newX, double newY, double newA){
         x = newX;
         y = newY;
