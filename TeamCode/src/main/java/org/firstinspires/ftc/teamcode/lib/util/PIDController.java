@@ -84,9 +84,9 @@ public class PIDController{
 	}
 
 	/**
-	 * Changes the I parameter
+	 * Changes the I parameter <br>
 	 * This is used for overcoming disturbances, and ensuring that the controller always gets to the control mode. 
-	 * Typically tuned second for "Position" based modes, and third for "Rate" or continuous based modes.
+	 * Typically tuned second for "Position" based modes, and third for "Rate" or continuous based modes. <br>
 	 * Affects output through <b>output+=previous_errors*Igain ;previous_errors+=current_error</b>
 	 * 
 	 * @see {@link #setMaxIOutput(double) setMaxIOutput} for how to restrict
@@ -375,7 +375,7 @@ public class PIDController{
      * Can be very useful for fast-reacting control loops, such as ones 
      * with large P or D values and feed-forward systems.
      * 
-	 * @param rate with units being the same as the output
+	 * @param rate, with units being the same as the output
 	 */
 	public void setOutputRampRate(double rate){
 		outputRampRate=rate;
