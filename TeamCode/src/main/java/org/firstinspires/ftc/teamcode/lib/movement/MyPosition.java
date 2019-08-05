@@ -161,15 +161,15 @@ public class MyPosition {
     double deltaX = auxDeltaCM - (thetaDelta * strafeConstant);
     double deltaY = rightDeltaCM;
 
-    //worldXPosition += deltaX;
-    //worldYPosition += deltaY;
+    worldXPosition += deltaX;
+    worldYPosition += deltaY;
     rightCM += deltaY;
     auxCM += deltaX;
 
-    worldXPosition = (Math.cos(worldAngle_rad) * rightCM) + (Math.sin(worldAngle_rad) *
+    /*worldXPosition = (Math.cos(worldAngle_rad) * rightCM) + (Math.sin(worldAngle_rad) *
         auxCM);
     worldYPosition = (Math.sin(worldAngle_rad) * rightCM) - (Math.cos(worldAngle_rad) *
-        auxCM);
+        auxCM);*/
 
 
     lastAngle = worldAngle_rad;
