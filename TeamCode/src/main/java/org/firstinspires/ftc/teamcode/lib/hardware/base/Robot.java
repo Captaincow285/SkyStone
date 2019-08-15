@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
+import org.firstinspires.ftc.teamcode.lib.movement.Pose;
 import org.openftc.revextensions2.ExpansionHubEx;
 import org.openftc.revextensions2.ExpansionHubMotor;
 import org.openftc.revextensions2.RevBulkData;
@@ -57,10 +58,10 @@ public class Robot extends OpMode{
     //stores gamepads in global variables
     if(!isAuto){
       getGamepads(gamepad1, gamepad2);
+      //dt.initGyro(hardwareMap.get(BNO055IMU.class, "imu"));
     }
     
     dt.initMotors(motors);
-    dt.initGyro(hardwareMap.get(BNO055IMU.class, "imu"));
 
   }
 
@@ -76,16 +77,13 @@ public class Robot extends OpMode{
     }
 
     //fetch our rotation in radians from the imu
-    worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
+    //worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
 
     //calculate our x and y coordinates
-    MyPosition.PosCalcNiceArnav(
+    Pose.PosCalcRelative(
         dt.fr.getCurrentPosition(),
-        dt.bl.getCurrentPosition());
-
-    //round x and y positions
-    worldXPosition = Double.parseDouble(df.format(worldXPosition));
-    worldYPosition = Double.parseDouble(df.format(worldYPosition));
+        dt.bl.getCurrentPosition()
+    );
 
     //update our auto states
     updateAutoState();
@@ -95,9 +93,9 @@ public class Robot extends OpMode{
 
     //telemetry.addLine("positions set!");
 
-    telemetry.addLine("wx: " + worldXPosition);
-    telemetry.addLine("wy: " + worldYPosition);
-    telemetry.addLine("wa: " + Math.toDegrees(worldAngle_rad));
+    //telemetry.addLine("wx: " + worldXPosition);
+    //telemetry.addLine("wy: " + worldYPosition);
+    //telemetry.addLine("wa: " + Math.toDegrees(worldAngle_rad));
     telemetry.addLine("");
     telemetry.addLine("auto: " + auto);
    // telemetry.addLine("r: " + dt.fr.getCurrentPosition());
@@ -139,6 +137,8 @@ public class Robot extends OpMode{
   private void updateAtTarget(){
     if(((worldXPosition >= xTarget -mTolerance) && (worldXPosition <= xTarget+mTolerance)) && ((worldYPosition >= yTarget -mTolerance) && (worldYPosition <= yTarget+mTolerance)) && ((Math.toDegrees(worldAngle_rad) >= aTarget - aTolerance) && (Math.toDegrees(worldAngle_rad) <= aTarget +aTolerance))){
       roboState = RobotStates.AT_TARGET;
+      wxRelative = 0;
+      wyRelative = 0;
     } else if(roboState == RobotStates.AT_TARGET){
       roboState = RobotStates.MOVING_TO_TARGET;
     }

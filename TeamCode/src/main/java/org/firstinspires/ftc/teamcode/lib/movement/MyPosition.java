@@ -92,7 +92,6 @@ public class MyPosition {
 
   }
 
-
   //dX = e0 - (dTheta * y0), dY = e1 - (dTheta * x0), and dTheta = imu_delta
   public static void PosCalcNiceArnav(double r, double a){
 
@@ -107,8 +106,8 @@ public class MyPosition {
     double wheelRightCurrent = currPos_r;
     double wheelAuxCurrent = currPos_a;
 
-    double rightCM = wheelRightCurrent * cmPerTick;
-    double auxCM = wheelAuxCurrent * cmPerTick;
+    //double rightCM = wheelRightCurrent * cmPerTick;
+    //double auxCM = wheelAuxCurrent * cmPerTick;
 
     double wheelRightDelta = wheelRightCurrent - wheelRightLast;
     double wheelAuxDelta = wheelAuxCurrent - wheelAuxLast;
@@ -116,14 +115,13 @@ public class MyPosition {
     double rightDeltaCM = wheelRightDelta * cmPerTick;
     double auxDeltaCM = wheelAuxDelta * cmPerTick;
 
-    //this doenst make sense my guy arnav
+    //this doenst make sense my guy arnav 08/14 nvm i get it
     //double deltaX = auxDeltaCM - (thetaDelta * 7.5);
     double deltaX = auxDeltaCM - (thetaDelta * strafeConstant);
     double deltaY = rightDeltaCM;
 
     worldXPosition += deltaX;
     worldYPosition += deltaY;
-
 
     lastAngle = worldAngle_rad;
 

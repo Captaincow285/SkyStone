@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode.lib.movement;
 
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.deltaX;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.deltaY;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.strafeConstant;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.worldAngle_rad;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.worldXPosition;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.worldYPosition;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.wxRelative;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.wyRelative;
 
 /**
  * represents a Pose(x,y,angle)
@@ -58,19 +62,10 @@ public class Pose{
         a = newA;
     }
 
-    //dX = e0 - (dTheta * y0), dY = e1 - (dTheta * x0), and dTheta = imu_delta
-    public static void PosCalcArnav(double r, double a){
+    public static void PosCalcRelative(double y, double x){
 
-        double currentAngle = worldAngle_rad;
-
-        double thetaDelta = currentAngle - lastAngle;
-
-
-        double wheelRightCurrent = r;
-        double wheelAuxCurrent = -a;
-
-        double rightCM = wheelRightCurrent * cmPerTick;
-        double auxCM = wheelAuxCurrent * cmPerTick;
+        double wheelRightCurrent = y;
+        double wheelAuxCurrent = -x;
 
         double wheelRightDelta = wheelRightCurrent - wheelRightLast;
         double wheelAuxDelta = wheelAuxCurrent - wheelAuxLast;
@@ -78,20 +73,11 @@ public class Pose{
         double rightDeltaCM = wheelRightDelta * cmPerTick;
         double auxDeltaCM = wheelAuxDelta * cmPerTick;
 
-        //this doenst make sense my guy arnav
-        //double deltaX = auxDeltaCM - (thetaDelta * 7.5);
-        double deltaX = auxDeltaCM - (thetaDelta * strafeConstant);
-        double deltaY = rightDeltaCM;
+        deltaX = rightDeltaCM;
+        deltaY = auxDeltaCM;
 
-        worldXPosition += deltaX;
-        worldYPosition += deltaY;
-
-
-        lastAngle = worldAngle_rad;
-
-        //save the last positions for later
-        wheelRightLast = wheelRightCurrent;
-        wheelAuxLast = wheelAuxCurrent;
+        wxRelative += deltaX;
+        wyRelative += deltaY;
 
     }
 }

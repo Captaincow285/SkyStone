@@ -18,7 +18,7 @@ import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 public class RobotMovement {
 
-    public static boolean followCurve(ArrayList<CurvePoint> allPoints, double followAngle){
+    /*public static boolean followCurve(ArrayList<CurvePoint> allPoints, double followAngle){
 
 
         CurvePoint followMe = getFollowPointPath(allPoints, new Point(worldXPosition, worldYPosition), allPoints.get(0).followDistance);
@@ -84,7 +84,7 @@ public class RobotMovement {
             movement_turn = Range.clip(relativeTurnAngle/Math.toRadians(30), -1, 1) * turnSpeed;
         }
 
-    }
+    }*/
 
     /**
      * used to control the drive base with a gamepad during teleop
@@ -95,6 +95,17 @@ public class RobotMovement {
         movement_x = Range.clip(gamepad.left_stick_x, -1, 1);
         movement_y = Range.clip(gamepad.left_stick_y, -1, 1);
         movement_turn = Range.clip(gamepad.right_stick_x, -1, 1);
+
+    }
+
+    /**
+     * compares the current delta positions to their target and calculates the moevements for each movement direction/type
+     */
+    public static void applyTargetRelative(){
+
+        movement_x = PIDx.getOutput(wxRelative, xTarget);
+        movement_y = PIDy.getOutput(wyRelative, yTarget);
+        movement_turn = -PIDa.getOutput(Math.toDegrees(worldAngle_rad), aTarget);
 
     }
 

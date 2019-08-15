@@ -16,6 +16,12 @@ public class GlobalVars {
     public static double worldYPosition = 0.0;
     public static double worldAngle_rad = 0.0;
 
+    public static double wxRelative = 0.0;
+    public static double wyRelative = 0.0;
+
+    public static double deltaX = 0.0;
+    public static double deltaY = 0.0;
+
     public static double movement_x = 0;
     public static double movement_y = 0;
     public static double movement_turn = 0;
