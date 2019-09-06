@@ -143,6 +143,13 @@ public class Robot extends OpMode{
       roboState = RobotStates.MOVING_TO_TARGET;
     }
   }
+  
+  /**
+  *
+  */
+  private void updateAtTargetAlt(){
+    
+  }
 
   /**
    * updates our auto state in relation to our robot state
