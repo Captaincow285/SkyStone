@@ -3,13 +3,15 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.main;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
-import org.firstinspires.ftc.teamcode.lib.movement.CurvePoint;
-import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
+import org.firstinspires.ftc.teamcode.lib.movement.Point;
 import org.firstinspires.ftc.teamcode.lib.movement.Pose;
+import org.firstinspires.ftc.teamcode.lib.movement.RobotMovement;
+import org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.*;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.followCurve;
+import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.setTarget;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.auto;
 import static org.firstinspires.ftc.teamcode.opmodes.auto.main.Auto.AutoStates.*;
 
 
@@ -21,12 +23,13 @@ public class Auto extends Robot {
   }
 
   AutoStates robo = START;
-  ArrayList<CurvePoint> allPoints;
+
 
   @Override
   public void init(){
     super.init();
 
+    Pose.setPose(0, 0, 0);
 
   }
 
@@ -34,49 +37,31 @@ public class Auto extends Robot {
   public void loop(){
     super.loop();
 
-    switch(robo){
+    switch(auto){
 
-      case START: {
+      case 0 : {
 
-        Pose.setPose(0, 0, 0);
+        setTarget(new Point(0,0));
 
-        allPoints = new ArrayList<>();
-
-        allPoints.add(new CurvePoint(20.0,  0.0, 25,
-            Math.toRadians(90),0.6));
-
-        allPoints.add(new CurvePoint(20.0,  20.0, 25,
-            Math.toRadians(90),0.6));
-
-        allPoints.add(new CurvePoint(0.0,  20.0, 25,
-            Math.toRadians(90),0.6));
-
-        allPoints.add(new CurvePoint(0.0,  0.0, 25,
-            Math.toRadians(90),0.6));
-
-        allPoints.add(new CurvePoint(0.0,  0.0, 25,
-            Math.toRadians(135),0.6));
-
-        robo = MOVE1;
         break;
       }
 
-      case MOVE1: {
+      case 1: {
 
-        followCurve(allPoints, Math.toRadians(90));
+        setTarget(new Point(10,10));
 
-        robo = END;
         break;
 
       }
 
-      case MOVE2:{
+      case 2:{
 
-        robo = END;
+        setTarget(new Point(10, 20));
+
         break;
       }
 
-      case END: {
+      case 3: {
 
         Auto.super.stop();
         stop();

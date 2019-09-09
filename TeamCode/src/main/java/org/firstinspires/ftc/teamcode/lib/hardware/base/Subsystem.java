@@ -16,7 +16,7 @@ public abstract class Subsystem {
    * sets hardware mapped references equal to local references
    */
 
-  public abstract void setup();
+  //public abstract void setup(Object object);
 
   /**
    * updates the subsystem in according to its designated target or desired state
@@ -26,7 +26,7 @@ public abstract class Subsystem {
   /**
    * sets the target or state for the subsystem to want to reach
    */
-  public abstract void setTarget();
+  //public abstract void setTarget(double target);
 
 
   /**

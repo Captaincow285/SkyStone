@@ -49,6 +49,10 @@ public class GlobalVars {
         FINISHED, AT_TARGET, MOVING_TO_TARGET, MOVING, STOPPED
     }
 
+    public enum ClampState{
+        WIDE, SLIM
+    }
+
     public static RobotStates roboState = RobotStates.STOPPED;
 
     public final static double autoMoveSpeed = 0.5;
@@ -73,5 +77,10 @@ public class GlobalVars {
     public static double aKp = 0.03;
     public static double aKi = 0;
     public static double aKd = 0;
+
+    //PIDe
+    public static double eKp = 0.05;
+    public static double eKi = 0;
+    public static double eKd = 0;
 
 }
