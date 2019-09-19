@@ -50,6 +50,11 @@ public class Pose{
         a = newPose.a;
     }
 
+    public static void setPose(Point newPoint){
+        x = newPoint.x;
+        y = newPoint.y;
+    }
+
     /**
      * sets x, y, and a to a new x, y, and a
      * @param newX new x
@@ -78,6 +83,29 @@ public class Pose{
 
         wxRelative += deltaX;
         wyRelative += deltaY;
+
+    }
+
+    public static void PosCalc(double y, double x){
+
+        double wheelRightCurrent = y;
+        double wheelAuxCurrent = -x;
+
+        double wheelRightDelta = wheelRightCurrent - wheelRightLast;
+        double wheelAuxDelta = wheelAuxCurrent - wheelAuxLast;
+
+        double rightDeltaCM = wheelRightDelta * cmPerTick;
+        double auxDeltaCM = wheelAuxDelta * cmPerTick;
+
+        deltaX = rightDeltaCM;
+        deltaY = auxDeltaCM;
+
+        worldXPosition += deltaX;
+        worldYPosition += deltaY;
+
+        //save the last positions for later
+        wheelRightLast = wheelRightCurrent;
+        wheelAuxLast = wheelAuxCurrent;
 
     }
 }

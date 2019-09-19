@@ -19,6 +19,7 @@ import org.openftc.revextensions2.RevExtensions2;
 import java.text.DecimalFormat;
 
 import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.AngleWrap;
+import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.applyTarget;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 /**
@@ -80,28 +81,29 @@ public class Robot extends OpMode{
     //worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
 
     //calculate our x and y coordinates
-    Pose.PosCalcRelative(
+    Pose.PosCalc(
         dt.fr.getCurrentPosition(),
         dt.bl.getCurrentPosition()
     );
 
+    applyTarget();
+
     //update our auto states
-    updateAutoState();
+    //updateAutoState(); this is currently done inside the opmode instance
     
     //update our robot states
     updateAtTarget();
 
     //telemetry.addLine("positions set!");
 
-    //telemetry.addLine("wx: " + worldXPosition);
-    //telemetry.addLine("wy: " + worldYPosition);
+    telemetry.addLine("wx: " + worldXPosition);
+    telemetry.addLine("wy: " + worldYPosition);
     //telemetry.addLine("wa: " + Math.toDegrees(worldAngle_rad));
     telemetry.addLine("");
-    telemetry.addLine("auto: " + auto);
    // telemetry.addLine("r: " + dt.fr.getCurrentPosition());
    // telemetry.addLine("a: " + dt.bl.getCurrentPosition());
-    telemetry.addLine("");
-    telemetry.addLine("auto state: " + autoState);
+    //telemetry.addLine("");
+    telemetry.addLine("auto state: " + autoStateLZ);
     telemetry.addLine("");
     telemetry.addLine("robot state: " + roboState);
     //telemetry.addLine("strafe const: " + strafeConstant);

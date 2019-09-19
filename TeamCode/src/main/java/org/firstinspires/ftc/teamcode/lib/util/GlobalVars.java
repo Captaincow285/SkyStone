@@ -12,6 +12,15 @@ import java.util.ArrayList;
 @Config
 public class GlobalVars {
 
+    public final static double STONE_LENGTH = 20.32; //cm
+    public final static double STONE_WIDTH = 10.16; //cm
+
+    public final static double ROBOT_WIDTH = 45.72; //cm
+    public final static double ROBOT_LENGTH = 45.085; //cm
+
+    public final static double DIST_FROM_WALL_TO_STONES = 119.38; //cm
+    public final static double ORIGIN_TO_STONES = DIST_FROM_WALL_TO_STONES - (ROBOT_WIDTH/2);
+
     public static double worldXPosition = 0.0;
     public static double worldYPosition = 0.0;
     public static double worldAngle_rad = 0.0;
@@ -38,16 +47,30 @@ public class GlobalVars {
 
     public static int auto = 0;
 
+    public enum AutoType{
+        LOADING_FULL
+    }
+
     public enum AutoStates{
         START, MOVE, MOVE2, MOVE3, MOVE4, END
     }
 
+    public enum LZStates{
+        START, GET_SKYSTONE_LOCATIONS, MOVE_TO_SS_1, GRAB_SS_1, MOVE_TO_FOUNDATION, DEPLOY_YEETER, YEET, DEPOSIT_SS_1, MOVE_TO_SS_2, GRAB_SS_2, DEPOSIT_SS_2, END
+    }
+
     public static AutoStates autoState = AutoStates.START;
+
+    public static LZStates autoStateLZ = LZStates.START;
 
 
     public enum RobotStates{
         FINISHED, AT_TARGET, MOVING_TO_TARGET, MOVING, STOPPED
     }
+
+
+
+
 
     public static RobotStates roboState = RobotStates.STOPPED;
 
