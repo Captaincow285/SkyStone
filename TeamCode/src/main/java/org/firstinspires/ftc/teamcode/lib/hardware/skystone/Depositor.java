@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Subsystem;
 import org.firstinspires.ftc.teamcode.lib.util.PIDController;
 
-import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.eKi;
-import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.eKp;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 public class Depositor extends Subsystem {
     
@@ -27,7 +26,7 @@ public class Depositor extends Subsystem {
         depositor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         depositor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        PIDd = new PIDController(eKp, eKi, eKp);
+        PIDd = new PIDController(dKp, dKi, dKp);
 
         PIDd.setSetpoint(target);
 

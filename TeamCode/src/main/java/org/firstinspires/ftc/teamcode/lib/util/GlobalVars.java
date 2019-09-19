@@ -97,4 +97,12 @@ public class GlobalVars {
     public static double aKi = 0;
     public static double aKd = 0;
 
+    public static double eKp = 0.03;
+    public static double eKi = 0;
+    public static double eKd = 0;
+
+    public static double dKp = 0.03;
+    public static double dKi = 0;
+    public static double dKd = 0;
+
 }

@@ -17,9 +17,6 @@ public class Basic extends Robot {
     public void init() {
         super.init();
 
-        MyPosition.setPosition(0,0,0);
-
-
     }
 
     @Override

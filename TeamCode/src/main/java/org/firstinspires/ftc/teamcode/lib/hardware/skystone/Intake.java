@@ -11,6 +11,10 @@ public class Intake extends Subsystem {
 
     private double leftTarget, rightTarget, target;
 
+    public Intake(){
+
+    }
+
     public void init(DcMotor left, DcMotor right) {
 
         this.left = left;
@@ -22,9 +26,9 @@ public class Intake extends Subsystem {
         this.right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         this.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        this.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
