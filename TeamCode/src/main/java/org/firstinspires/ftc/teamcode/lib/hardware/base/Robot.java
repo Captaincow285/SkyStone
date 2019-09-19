@@ -18,6 +18,8 @@ import org.openftc.revextensions2.RevExtensions2;
 
 import java.text.DecimalFormat;
 
+import static org.firstinspires.ftc.teamcode.lib.hardware.base.DriveTrain.PIDx;
+import static org.firstinspires.ftc.teamcode.lib.hardware.base.DriveTrain.PIDy;
 import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.AngleWrap;
 import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.applyTarget;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
@@ -144,6 +146,19 @@ public class Robot extends OpMode{
     } else if(roboState == RobotStates.AT_TARGET){
       roboState = RobotStates.MOVING_TO_TARGET;
     }
+  }
+  
+  /**
+  * updates the robot state in relation to the error of the pid loops
+  */
+  private void updateAtTargetAlt(){
+
+    if(PIDx.getError() < 1 && PIDy.getError() < 1){
+      roboState = RobotStates.AT_TARGET;
+      wxRelative = 0;
+      wyRelative = 0;
+    }
+
   }
 
   /**

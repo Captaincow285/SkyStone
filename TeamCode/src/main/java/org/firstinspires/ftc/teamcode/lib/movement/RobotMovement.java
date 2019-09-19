@@ -129,6 +129,8 @@ public class RobotMovement {
         xTarget = point.x;
         yTarget = point.y;
 
+        roboState = RobotStates.MOVING_TO_TARGET;
+
     }
 
     /**
@@ -142,6 +144,8 @@ public class RobotMovement {
         yTarget = point.y;
         aTarget = angle;
 
+        roboState = RobotStates.MOVING_TO_TARGET;
+
     }
 
     /**
@@ -153,6 +157,8 @@ public class RobotMovement {
         xTarget = pose.x;
         yTarget = pose.y;
         aTarget = pose.a;
+
+        roboState = RobotStates.MOVING_TO_TARGET;
 
     }
 
