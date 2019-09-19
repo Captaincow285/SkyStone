@@ -14,6 +14,8 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.lib.movement.Point;
+import org.firstinspires.ftc.teamcode.lib.movement.Pose;
 import org.firstinspires.ftc.teamcode.lib.recording.InputManager;
 import org.firstinspires.ftc.teamcode.lib.util.PIDController;
 
@@ -165,6 +167,61 @@ public class DriveTrain{
     bl.setPower(Range.clip(blP, -1, 1));
     br.setPower(Range.clip(brP, -1, 1));
 
+
+  }
+
+  /**
+   * compares the current positions to their targets and calculates the movements for each movement direction/type
+   */
+  public void update(){
+
+    movement_x = PIDx.getOutput(worldXPosition, xTarget);
+    movement_y = PIDy.getOutput(worldYPosition, yTarget);
+    movement_turn = -PIDa.getOutput(Math.toDegrees(worldAngle_rad), aTarget);
+
+    applyMovement();
+
+  }
+
+  /**
+   * used to designate a new Point(x,y) target for the robot to follow
+   * @param point Point(x,y) target
+   */
+  public void setTarget(Point point){
+
+    xTarget = point.x;
+    yTarget = point.y;
+
+    roboState = RobotStates.MOVING_TO_TARGET;
+
+  }
+
+  /**
+   * used to designate a new Point(x,y) target for the robot to follow
+   * @param point Point(x,y) target
+   * @param angle target angle in double
+   */
+  public void setTarget(Point point, double angle){
+
+    xTarget = point.x;
+    yTarget = point.y;
+    aTarget = angle;
+
+    roboState = RobotStates.MOVING_TO_TARGET;
+
+  }
+
+  /**
+   * used to designate a new Pose(x,y,a) target for the robot to follow
+   * @param pose Pose(x, y, a) target
+   */
+  public void setTarget(Pose pose){
+
+    xTarget = pose.x;
+    yTarget = pose.y;
+    aTarget = pose.a;
+
+    roboState = RobotStates.MOVING_TO_TARGET;
 
   }
 

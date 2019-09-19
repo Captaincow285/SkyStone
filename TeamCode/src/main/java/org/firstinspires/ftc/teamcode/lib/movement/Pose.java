@@ -16,7 +16,7 @@ public class Pose{
 
     public static double x, y, a;
 
-    private static double circumfrenceOfWheel = 15.71;
+    private static double circumfrenceOfWheel = 15.71;//cm
     private static double ticksPerRev = 1440;
     private static double cmPerTick = circumfrenceOfWheel/ticksPerRev;
 

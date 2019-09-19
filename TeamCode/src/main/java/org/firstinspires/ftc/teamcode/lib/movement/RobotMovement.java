@@ -109,58 +109,7 @@ public class RobotMovement {
 
     }
 
-    /**
-     * compares the current positions to their targets and calculates the movements for each movement direction/type
-     */
-    public static void applyTarget(){
 
-        movement_x = PIDx.getOutput(worldXPosition, xTarget);
-        movement_y = PIDy.getOutput(worldYPosition, yTarget);
-        movement_turn = -PIDa.getOutput(Math.toDegrees(worldAngle_rad), aTarget);
-
-    }
-
-    /**
-     * used to designate a new Point(x,y) target for the robot to follow
-     * @param point Point(x,y) target
-     */
-    public static void setTarget(Point point){
-
-        xTarget = point.x;
-        yTarget = point.y;
-
-        roboState = RobotStates.MOVING_TO_TARGET;
-
-    }
-
-    /**
-     * used to designate a new Point(x,y) target for the robot to follow
-     * @param point Point(x,y) target
-     * @param angle target angle in double
-     */
-    public static void setTarget(Point point, double angle){
-
-        xTarget = point.x;
-        yTarget = point.y;
-        aTarget = angle;
-
-        roboState = RobotStates.MOVING_TO_TARGET;
-
-    }
-
-    /**
-     * used to designate a new Pose(x,y,a) target for the robot to follow
-     * @param pose Pose(x, y, a) target
-     */
-    public static void setTarget(Pose pose){
-
-        xTarget = pose.x;
-        yTarget = pose.y;
-        aTarget = pose.a;
-
-        roboState = RobotStates.MOVING_TO_TARGET;
-
-    }
 
     /**
      * @param gyroTarget The target heading in degrees, between 0 and 360

@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.lib.util.GlobalVars;
 import java.util.ArrayList;
 
 import static org.firstinspires.ftc.teamcode.lib.movement.Pose.setPose;
-import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.setTarget;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 
@@ -65,7 +64,7 @@ public class LZAuto extends Robot {
 
 
         if(roboState == RobotStates.STOPPED){
-          setTarget(new Point( -(ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),(ss_1_position * STONE_LENGTH) - (ROBOT_LENGTH / 2)));
+          dt.setTarget(new Point( -(ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),((ss_1_position - 1) * STONE_LENGTH) - (ROBOT_LENGTH / 2)));
         } else if(roboState == RobotStates.AT_TARGET){
           roboState = RobotStates.STOPPED;
           autoStateLZ = LZStates.GRAB_SS_1;
@@ -77,6 +76,15 @@ public class LZAuto extends Robot {
       }
 
       case GRAB_SS_1: {
+
+        intake.setTarget(1);
+        dt.setTarget(new Point(Pose.x, ((ss_1_position) * STONE_LENGTH) - (ROBOT_LENGTH / 2)));
+
+        if(roboState == RobotStates.AT_TARGET){
+          roboState = RobotStates.STOPPED;
+          autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
+        }
+
 
         break;
       }

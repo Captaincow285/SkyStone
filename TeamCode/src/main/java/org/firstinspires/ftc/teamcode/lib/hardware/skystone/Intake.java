@@ -11,7 +11,7 @@ public class Intake extends Subsystem {
 
     private double leftTarget, rightTarget, target;
 
-    public void setup(DcMotor left, DcMotor right) {
+    public void init(DcMotor left, DcMotor right) {
 
         this.left = left;
         this.right = right;
@@ -48,6 +48,13 @@ public class Intake extends Subsystem {
 
         this.target = target;
 
+
+    }
+
+    public void setTarget(double leftTarget, double rightTarget){
+
+        this.leftTarget = leftTarget;
+        this.rightTarget = rightTarget;
 
     }
 

@@ -7,8 +7,10 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Intake;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
 import org.firstinspires.ftc.teamcode.lib.movement.Pose;
 import org.openftc.revextensions2.ExpansionHubEx;
@@ -16,12 +18,11 @@ import org.openftc.revextensions2.ExpansionHubMotor;
 import org.openftc.revextensions2.RevBulkData;
 import org.openftc.revextensions2.RevExtensions2;
 
+import java.nio.channels.DatagramChannel;
 import java.text.DecimalFormat;
 
 import static org.firstinspires.ftc.teamcode.lib.hardware.base.DriveTrain.PIDx;
 import static org.firstinspires.ftc.teamcode.lib.hardware.base.DriveTrain.PIDy;
-import static org.firstinspires.ftc.teamcode.lib.movement.MyPosition.AngleWrap;
-import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.applyTarget;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 /**
@@ -44,6 +45,7 @@ public class Robot extends OpMode{
   private RevMotor[] motors;
 
   public DriveTrain dt = new DriveTrain();
+  public Intake intake = new Intake();
 
   //public FtcDashboard dashboard = FtcDashboard.getInstance();
   //public TelemetryPacket packet = new TelemetryPacket();
@@ -66,6 +68,8 @@ public class Robot extends OpMode{
     
     dt.initMotors(motors);
 
+    intake.init(hardwareMap.get(DcMotor.class, "intakeLeft"), hardwareMap.get(DcMotor.class, "intakeRight"));
+
   }
 
   @Override
@@ -76,7 +80,8 @@ public class Robot extends OpMode{
     
     //if the robot is not finished, apply the motor powers to the motors
     if(roboState != RobotStates.FINISHED) {
-      dt.applyMovement();
+      dt.update();
+      intake.update();
     }
 
     //fetch our rotation in radians from the imu
@@ -87,8 +92,6 @@ public class Robot extends OpMode{
         dt.fr.getCurrentPosition(),
         dt.bl.getCurrentPosition()
     );
-
-    applyTarget();
 
     //update our auto states
     //updateAutoState(); this is currently done inside the opmode instance
