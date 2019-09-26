@@ -19,6 +19,9 @@ import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 public class LZAuto extends Robot {
 
   int ss_1_position = 0; //0-6
+  int ss_2_position = 4;
+
+  Quarry quarry = new Quarry();
 
   @Override
   public void init(){
@@ -27,11 +30,17 @@ public class LZAuto extends Robot {
     //change this to use absolute positions (idk what to base it on) but rn its relative
     setPose((ROBOT_WIDTH/2),0,0);
 
+
+    quarry.populateQuarry();
+
+
   }
 
   @Override
   public void init_loop(){
     //skystone detection
+
+    quarry.populateSkystones(ss_1_positon, ss_2_position);
 
     //super.telemetry.addLine("");
 
@@ -64,7 +73,7 @@ public class LZAuto extends Robot {
 
 
         if(roboState == RobotStates.STOPPED){
-          dt.setTarget(new Point( -(ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),((ss_1_position - 1) * STONE_LENGTH) - (ROBOT_LENGTH / 2)));
+          moveToStone(new Stone(ss_1_position - 1));
         } else if(roboState == RobotStates.AT_TARGET){
           roboState = RobotStates.STOPPED;
           autoStateLZ = LZStates.GRAB_SS_1;
@@ -78,7 +87,7 @@ public class LZAuto extends Robot {
       case GRAB_SS_1: {
 
         intake.setTarget(1);
-        dt.setTarget(new Point(Pose.x, ((ss_1_position) * STONE_LENGTH) - (ROBOT_LENGTH / 2)));
+
 
         if(roboState == RobotStates.AT_TARGET){
           roboState = RobotStates.STOPPED;
@@ -105,5 +114,19 @@ public class LZAuto extends Robot {
 
 
   }
+
+  public void moveToStone(Stone targetStone){
+
+      robot.dt.setTarget(new Point( -(ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),(quarry.getRoughStonePosition(targetStone.getPosition())) - (ROBOT_LENGTH / 2)));
+
+  }
+
+  public void collectStone(Stone targetStone){
+
+        robot.intake.setTarget(1);
+        dt.setTarget(new Point(worldXPosition, ((ss_1_position) * STONE_LENGTH) - (ROBOT_LENGTH / 2)));
+
+    }
+
 
 }

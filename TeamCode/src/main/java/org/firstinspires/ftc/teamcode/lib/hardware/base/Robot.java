@@ -38,9 +38,9 @@ public class Robot extends OpMode{
 
   private RevBulkData revExpansionMasterBulkData;
 
-  private ExpansionHubEx revMaster;
+  private ExpansionHubEx revTx;
   // used in future if you need bulk reads from the other hub
-  private ExpansionHubEx revSlave;
+  private ExpansionHubEx revRx;
 
   private RevMotor[] motors;
 
@@ -50,22 +50,24 @@ public class Robot extends OpMode{
   //public FtcDashboard dashboard = FtcDashboard.getInstance();
   //public TelemetryPacket packet = new TelemetryPacket();
 
+
+
   @Override
   public void init() {
 
     RevExtensions2.init();
 
-    revMaster = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 2");
-    //revSlave = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 5");
+    revTx = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 6");
+    revRx = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 9");
 
     motors = new RevMotor[]{new RevMotor((ExpansionHubMotor) hardwareMap.get("fl"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("fr"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("bl"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("br"),true)};
-    
+
     //stores gamepads in global variables
     if(!isAuto){
       getGamepads(gamepad1, gamepad2);
       //dt.initGyro(hardwareMap.get(BNO055IMU.class, "imu"));
     }
-    
+
     dt.initMotors(motors);
 
     intake.init(hardwareMap.get(DcMotor.class, "intakeLeft"), hardwareMap.get(DcMotor.class, "intakeRight"));
@@ -77,12 +79,14 @@ public class Robot extends OpMode{
 
     //gets sensor data
     getRevBulkData();
-    
+
     //if the robot is not finished, apply the motor powers to the motors
     if(roboState != RobotStates.FINISHED) {
       dt.update();
-      intake.update();
+
     }
+
+    intake.update();
 
     //fetch our rotation in radians from the imu
     //worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
@@ -95,9 +99,9 @@ public class Robot extends OpMode{
 
     //update our auto states
     //updateAutoState(); this is currently done inside the opmode instance
-    
+
     //update our robot states
-    updateAtTarget();
+    updateAtTargetAlt();
 
     //telemetry.addLine("positions set!");
 
@@ -126,6 +130,20 @@ public class Robot extends OpMode{
 
   }
 
+/*
+
+ROBOT FUNCTIONS
+
+*/
+
+
+
+/*
+
+UTIL FUNCTIONS
+
+*/
+
   /**
    * stores gamepads in global variables
    * @param main main gamepad, used for driving the robot base
@@ -150,7 +168,7 @@ public class Robot extends OpMode{
       roboState = RobotStates.MOVING_TO_TARGET;
     }
   }
-  
+
   /**
   * updates the robot state in relation to the error of the pid loops
   */
