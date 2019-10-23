@@ -7,7 +7,9 @@ import org.firstinspires.ftc.teamcode.lib.movement.CurvePoint;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
 import org.firstinspires.ftc.teamcode.lib.movement.Point;
 import org.firstinspires.ftc.teamcode.lib.movement.Pose;
-import org.firstinspires.ftc.teamcode.lib.util.GlobalVars;
+import org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
+import org.firstinspires.ftc.teamcode.lib.util.Skystone.Quarry;
+import org.firstinspires.ftc.teamcode.lib.util.Skystone.Stone;
 
 import java.util.ArrayList;
 
@@ -40,7 +42,7 @@ public class LZAuto extends Robot {
   public void init_loop(){
     //skystone detection
 
-    quarry.populateSkystones(ss_1_positon, ss_2_position);
+    //quarry.populateSkystones(ss_1_position, ss_2_position);
 
     //super.telemetry.addLine("");
 
@@ -55,6 +57,7 @@ public class LZAuto extends Robot {
       case START: {
 
         roboState = RobotStates.STOPPED;
+        autoStateLZ = LZStates.MOVE_TO_SS_1;
 
         break;
       }
@@ -70,7 +73,6 @@ public class LZAuto extends Robot {
         treat the back edge of the first stone as (0,0), you move to (0, (ss_pos * length of block) - (robot_length/2))
 
          */
-
 
         if(roboState == RobotStates.STOPPED){
           moveToStone(new Stone(ss_1_position - 1));
@@ -117,13 +119,13 @@ public class LZAuto extends Robot {
 
   public void moveToStone(Stone targetStone){
 
-      robot.dt.setTarget(new Point( -(ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),(quarry.getRoughStonePosition(targetStone.getPosition())) - (ROBOT_LENGTH / 2)));
+      dt.setTarget(new Point( -(ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),(quarry.getRoughStonePosition(targetStone.getPosition())) - (ROBOT_LENGTH / 2)));
 
   }
 
   public void collectStone(Stone targetStone){
 
-        robot.intake.setTarget(1);
+        intake.setTarget(1);
         dt.setTarget(new Point(worldXPosition, ((ss_1_position) * STONE_LENGTH) - (ROBOT_LENGTH / 2)));
 
     }

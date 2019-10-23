@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.lib.util;
+package org.firstinspires.ftc.teamcode.lib.util.Skystone;
 
 public class Stone{
 
@@ -8,8 +8,8 @@ public class Stone{
     private boolean isCollected = false;
     private boolean isDisplaced = false;
 
-    private final int STONE_WIDTH = 10.16;//cm
-    private final int STONE_LENGTH = 20.32;//cm
+    private final double STONE_WIDTH = 10.16;//cm
+    private final double STONE_LENGTH = 20.32;//cm
 
     public Stone(int position){
 
@@ -39,12 +39,12 @@ public class Stone{
         this.isSkystone = isSkystone;
     }
 
-    public int getWidth(){
+    public double getWidth(){
         return STONE_WIDTH;
     }
 
-    public int getHeight(){
-        return STONE_HEIGHT;
-    }
+   // public int getHeight(){
+    //    return STONE_HEIGHT;
+  //  }
 
 }

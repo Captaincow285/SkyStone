@@ -2,13 +2,17 @@ package org.firstinspires.ftc.teamcode.lib.util.Skystone;
 
 import org.firstinspires.ftc.teamcode.lib.util.Skystone.Stone;
 
+import java.util.ArrayList;
+
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.STONE_LENGTH;
+
 public class Quarry{
 
-    private ArrayList<Stone> quarry = new ArrayList<Stone>[6];
+    private ArrayList<Stone> quarry = new ArrayList<Stone>(6);
 
     public Quarry(){
 
-
+        //populateQuarry();
 
     }
 
@@ -24,16 +28,16 @@ public class Quarry{
 
     public void populateSkystones(int ss_1, int ss_2){
 
-        quarry[ss_1].setIsSkystone(true);
-        quarry[ss_2].setIsSkystone(true);
+        quarry.get(ss_1).setIsSkystone(true);
+        quarry.get(ss_2).setIsSkystone(true);
 
     }
 
-    public int getRoughStonePositon(Stone stone){
-        return getRoughtStonePosition(stone.getPosition());
+    public double getRoughStonePositon(Stone stone){
+        return getRoughStonePosition(stone.getPosition());
     }
 
-    public int getRoughStonePosition(int position){
+    public double getRoughStonePosition(int position){
         return (position * STONE_LENGTH);
     }
 

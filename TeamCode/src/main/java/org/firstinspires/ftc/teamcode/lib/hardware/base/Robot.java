@@ -212,7 +212,7 @@ UTIL FUNCTIONS
 //        if(needToPollMaster){
     RevBulkData newDataMaster;
     try{
-      newDataMaster = revMaster.getBulkInputData();
+      newDataMaster = revTx.getBulkInputData();
       if(newDataMaster != null){
         revExpansionMasterBulkData = newDataMaster;
       }

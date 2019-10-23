@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.lib.hardware.skystone;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Subsystem;
 
@@ -41,6 +42,12 @@ public class Intake extends Subsystem {
 
         left.setPower(target);
         right.setPower(target);
+
+    }
+
+    public void manaualControl(Gamepad gamepad){
+
+        setTarget(gamepad.right_stick_y);
 
     }
 
