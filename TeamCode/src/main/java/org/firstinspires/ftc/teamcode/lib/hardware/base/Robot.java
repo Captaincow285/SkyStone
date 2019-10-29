@@ -82,10 +82,10 @@ public class Robot extends OpMode{
 
     //if the robot is not finished, apply the motor powers to the motors
     if(roboState != RobotStates.FINISHED) {
-      dt.update();
+
 
     }
-
+    dt.update();
     intake.update();
 
     //fetch our rotation in radians from the imu
@@ -93,15 +93,15 @@ public class Robot extends OpMode{
 
     //calculate our x and y coordinates
     Pose.PosCalc(
-        dt.fr.getCurrentPosition(),
-        dt.bl.getCurrentPosition()
+        dt.fl.getCurrentPosition(),
+        dt.fr.getCurrentPosition()
     );
 
     //update our auto states
     //updateAutoState(); this is currently done inside the opmode instance
 
     //update our robot states
-    updateAtTargetAlt();
+    //updateAtTargetAlt();
 
     //telemetry.addLine("positions set!");
 

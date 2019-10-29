@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.test;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 import org.firstinspires.ftc.teamcode.lib.movement.Point;
@@ -9,12 +10,11 @@ import org.firstinspires.ftc.teamcode.lib.movement.Pose;
 
 import java.util.ArrayList;
 
-import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.applyTarget;
-import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.setTarget;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 //@Config
 @Autonomous
+@Disabled
 public class GoToPoint extends Robot {
 
   ArrayList<Pose> points = new ArrayList<>();
@@ -39,7 +39,7 @@ public class GoToPoint extends Robot {
   @Override
   public void loop(){
     super.loop();
-
+/*
     applyTarget();
 
 

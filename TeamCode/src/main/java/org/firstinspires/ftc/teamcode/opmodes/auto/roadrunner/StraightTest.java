@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.roadrunner;
 
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 @Autonomous(group = "drive")
 @Deprecated
+@Disabled
 public class StraightTest extends LinearOpMode {
   public static double DISTANCE = 60;
 

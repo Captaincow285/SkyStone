@@ -24,6 +24,7 @@ public class Basic extends Robot {
         super.loop();
 
         manualControl(gamepad1);
+        intake.manaualControl(gamepad2);
 
 
 

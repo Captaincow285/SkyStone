@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.misc;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,7 @@ import org.openftc.revextensions2.RevBulkData;
 import org.openftc.revextensions2.RevExtensions2;
 
 @TeleOp (group = "test")
+@Disabled
 public class RevHubTest extends OpMode {
 
   private ExpansionHubEx revMaster;

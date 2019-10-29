@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.util.Angle;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.MovingStatistics;
 
@@ -25,6 +26,7 @@ import static org.firstinspires.ftc.teamcode.opmodes.auto.roadrunner.DriveConsta
  */
 @Autonomous(group = "drive")
 @Deprecated
+@Disabled
 public class NewTrackWidthTuner extends LinearOpMode {
     public static int CIRCUMFERENTIAL_DISTANCE = 500;
     public static int NUM_TRIALS = 5;
