@@ -32,6 +32,7 @@ public class LZAuto extends Robot {
     //change this to use absolute positions (idk what to base it on) but rn its relative
     setPose((ROBOT_WIDTH/2),0,0);
 
+    isAuto(true);
 
     quarry.populateQuarry();
 

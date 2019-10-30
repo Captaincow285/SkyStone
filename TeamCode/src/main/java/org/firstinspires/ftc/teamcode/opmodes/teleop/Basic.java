@@ -17,6 +17,8 @@ public class Basic extends Robot {
     public void init() {
         super.init();
 
+        isAuto(false);
+
     }
 
     @Override

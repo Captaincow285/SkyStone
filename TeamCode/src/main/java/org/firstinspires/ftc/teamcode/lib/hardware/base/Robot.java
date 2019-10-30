@@ -85,7 +85,12 @@ public class Robot extends OpMode{
 
 
     }
-    dt.update();
+
+    if(isAuto) {
+      dt.update();
+    } else {
+      dt.applyMovement();
+    }
     intake.update();
 
     //fetch our rotation in radians from the imu

@@ -47,6 +47,8 @@ public class GlobalVars {
 
     public static int auto = 0;
 
+    //public static boolean isAuto = false;
+
     public enum AutoType{
         LOADING_FULL
     }
