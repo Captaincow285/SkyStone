@@ -53,7 +53,7 @@ public class FollowSimple extends OpMode {
 
         motors = new RevMotor[]{new RevMotor((ExpansionHubMotor) hardwareMap.get("fl"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("fr"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("bl"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("br"),true)};
 
-        dt.initMotors(motors);
+        //dt.initMotors(motors);
 
         MyPosition.setPosition(0, 0, 0);
 

@@ -86,17 +86,7 @@ public class RobotMovement {
 
     }*/
 
-    /**
-     * used to control the drive base with a gamepad during teleop
-     * @param gamepad gamepad object used to control the drivebase
-     */
-    public static void manualControl(Gamepad gamepad){
 
-        movement_x = Range.clip(gamepad.left_stick_x, -1, 1);
-        movement_y = Range.clip(gamepad.left_stick_y, -1, 1);
-        movement_turn = Range.clip(gamepad.right_stick_x, -1, 1);
-
-    }
 
     /**
      * compares the current delta positions to their target and calculates the moevements for each movement direction/type

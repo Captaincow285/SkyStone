@@ -120,7 +120,9 @@ public class LZAuto extends Robot {
 
   public void moveToStone(Stone targetStone){
 
-      dt.setTarget(new Point( -(ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),(quarry.getRoughStonePosition(targetStone.getPosition())) - (ROBOT_LENGTH / 2)));
+      dt.setTarget(new Point( (ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),(quarry.getRoughStonePosition(targetStone.getPosition())) - (ROBOT_LENGTH / 2)));
+
+
 
   }
 

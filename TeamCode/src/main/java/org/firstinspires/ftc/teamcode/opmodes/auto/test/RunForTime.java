@@ -35,7 +35,7 @@ public class RunForTime extends OpMode {
     @Override
     public void loop() {
 
-        if(time.seconds() >= 2){
+        if(time.seconds() >= 1){
             setThrottle(0);
         } else {
             setThrottle(0.3);

@@ -8,7 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.teamcode.lib.movement.Pose;
 import org.firstinspires.ftc.teamcode.lib.recording.InputManager;
 import org.firstinspires.ftc.teamcode.lib.util.PIDController;
 
+import static org.firstinspires.ftc.teamcode.lib.hardware.base.Robot.isAuto;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 /**
@@ -26,7 +28,7 @@ import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
  */
 public class DriveTrain{
 
-  public RevMotor fl, fr, bl, br;
+  public DcMotor fl, fr, bl, br;
   public BNO055IMU imu;
 
   private double[] motorPowers = new double[4];
@@ -38,6 +40,8 @@ public class DriveTrain{
 
   //last update time
   private long lastUpdateTime = 0;
+
+  private double maxMotorPowerAuto = 0.6;
 
   //pid controller objects
   public static PIDController PIDx = new PIDController(xKp, xKi, xKd);
@@ -64,7 +68,7 @@ public class DriveTrain{
    *               bl = 2
    *               br = 3
    */
-  public void initMotors(RevMotor[] motors) {
+  public void initMotors(DcMotor[] motors) {
 
     fl = motors[0];
     fr = motors[1];
@@ -100,6 +104,18 @@ public class DriveTrain{
 
 
   }
+
+    /**
+     * used to control the drive base with a gamepad during teleop
+     * @param gamepad gamepad object used to control the drivebase
+     */
+    public void manualControl(Gamepad gamepad){
+
+        movement_x = Range.clip(gamepad.left_stick_x, -1, 1);
+        movement_y = Range.clip(gamepad.left_stick_y, -1, 1);
+        movement_turn = Range.clip(gamepad.right_stick_x, -1, 1);
+
+    }
 
 
   /**
@@ -144,12 +160,18 @@ public class DriveTrain{
       motorPowers[i] = (Math.abs(motorPowers[i]) < 0.075) ? 0:motorPowers[i];
     }*/
 
+    if(isAuto) {
 
-    fl.setPower(Range.clip(motorPowers[0], -1, 1));
-    fr.setPower(Range.clip(motorPowers[1], -1, 1));
-    bl.setPower(Range.clip(motorPowers[2], -1, 1));
-    br.setPower(Range.clip(motorPowers[3], -1, 1));
-
+        fl.setPower(Range.clip(motorPowers[0], -maxMotorPowerAuto, maxMotorPowerAuto));
+        fr.setPower(Range.clip(motorPowers[1], -maxMotorPowerAuto, maxMotorPowerAuto));
+        bl.setPower(Range.clip(motorPowers[2], -maxMotorPowerAuto, maxMotorPowerAuto));
+        br.setPower(Range.clip(motorPowers[3], -maxMotorPowerAuto, maxMotorPowerAuto));
+    } else {
+        fl.setPower(Range.clip(motorPowers[0], -1, 1));
+        fr.setPower(Range.clip(motorPowers[1], -1, 1));
+        bl.setPower(Range.clip(motorPowers[2], -1, 1));
+        br.setPower(Range.clip(motorPowers[3], -1, 1));
+    }
 
   }
 

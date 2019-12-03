@@ -51,6 +51,8 @@ public class Intake extends Subsystem {
 
     }
 
+
+
     /**
      * updates the intakes target power
      * @param target the target power
@@ -71,6 +73,11 @@ public class Intake extends Subsystem {
 
     @Override
     public void finishJob() {
+
+    }
+
+    public static void manualControl(Gamepad gamepad){
+
 
     }
 }

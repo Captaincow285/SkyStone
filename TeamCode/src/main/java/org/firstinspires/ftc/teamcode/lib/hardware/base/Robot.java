@@ -8,8 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.lib.hardware.skystone.FoundationMover;
 import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Intake;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
 import org.firstinspires.ftc.teamcode.lib.movement.Pose;
@@ -32,44 +34,43 @@ import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 //@TeleOp
 public class Robot extends OpMode{
 
-  private boolean isAuto = true;
+  public static boolean isAuto = true;
 
   public DecimalFormat df = new DecimalFormat("###.###");
 
   private RevBulkData revExpansionMasterBulkData;
 
-  private ExpansionHubEx revTx;
+  private ExpansionHubEx revMaster;
   // used in future if you need bulk reads from the other hub
-  private ExpansionHubEx revRx;
+  private ExpansionHubEx revSlave;
 
-  private RevMotor[] motors;
+  private DcMotor[] motors;
 
   public DriveTrain dt = new DriveTrain();
   public Intake intake = new Intake();
+  public FoundationMover fm = new FoundationMover();
 
   //public FtcDashboard dashboard = FtcDashboard.getInstance();
   //public TelemetryPacket packet = new TelemetryPacket();
-
-
 
   @Override
   public void init() {
 
     RevExtensions2.init();
 
-    revTx = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 6");
-    revRx = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 9");
+    revMaster = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 6");
+    revSlave = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 9");
 
-    motors = new RevMotor[]{new RevMotor((ExpansionHubMotor) hardwareMap.get("fl"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("fr"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("bl"),true), new RevMotor((ExpansionHubMotor) hardwareMap.get("br"),true)};
-
+    motors = new DcMotor[]{hardwareMap.dcMotor.get("fl"), hardwareMap.dcMotor.get("fr"), hardwareMap.dcMotor.get("bl"), hardwareMap.dcMotor.get("br")};
+    
     //stores gamepads in global variables
     if(!isAuto){
       getGamepads(gamepad1, gamepad2);
       //dt.initGyro(hardwareMap.get(BNO055IMU.class, "imu"));
     }
-
+    
     dt.initMotors(motors);
-
+    fm.init(hardwareMap.get(Servo.class, "fmLeft"), hardwareMap.get(Servo.class, "fmRight"));
     intake.init(hardwareMap.get(DcMotor.class, "intakeLeft"), hardwareMap.get(DcMotor.class, "intakeRight"));
 
   }
@@ -79,34 +80,34 @@ public class Robot extends OpMode{
 
     //gets sensor data
     getRevBulkData();
-
+    
     //if the robot is not finished, apply the motor powers to the motors
     if(roboState != RobotStates.FINISHED) {
-
 
     }
 
     if(isAuto) {
-      dt.update();
+        dt.update();
     } else {
-      dt.applyMovement();
+        dt.applyMovement();
     }
     intake.update();
+    fm.update();
 
     //fetch our rotation in radians from the imu
     //worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
 
     //calculate our x and y coordinates
     Pose.PosCalc(
-        dt.fl.getCurrentPosition(),
-        dt.fr.getCurrentPosition()
+        currentXTicks,
+        currentYTicks
     );
 
     //update our auto states
-    //updateAutoState(); this is currently done inside the opmode instance
-
+    //updateAutoState(); //this is currently done inside the opmode instance
+    
     //update our robot states
-    //updateAtTargetAlt();
+    updateAtTargetAlt();
 
     //telemetry.addLine("positions set!");
 
@@ -117,10 +118,13 @@ public class Robot extends OpMode{
    // telemetry.addLine("r: " + dt.fr.getCurrentPosition());
    // telemetry.addLine("a: " + dt.bl.getCurrentPosition());
     //telemetry.addLine("");
-    telemetry.addLine("auto state: " + autoStateLZ);
+    //telemetry.addLine("auto state: " + auto);
     telemetry.addLine("");
-    telemetry.addLine("robot state: " + roboState);
+    //telemetry.addLine("robot state: " + roboState);
     //telemetry.addLine("strafe const: " + strafeConstant);
+
+    telemetry.addLine("targetX: " + xTarget);
+    telemetry.addLine("targetY: " + yTarget);
 
     telemetry.update();
 
@@ -134,20 +138,6 @@ public class Robot extends OpMode{
     //dashboard.sendTelemetryPacket(packet);
 
   }
-
-/*
-
-ROBOT FUNCTIONS
-
-*/
-
-
-
-/*
-
-UTIL FUNCTIONS
-
-*/
 
   /**
    * stores gamepads in global variables
@@ -173,7 +163,7 @@ UTIL FUNCTIONS
       roboState = RobotStates.MOVING_TO_TARGET;
     }
   }
-
+  
   /**
   * updates the robot state in relation to the error of the pid loops
   */
@@ -183,6 +173,7 @@ UTIL FUNCTIONS
       roboState = RobotStates.AT_TARGET;
       wxRelative = 0;
       wyRelative = 0;
+
     }
 
   }
@@ -217,7 +208,7 @@ UTIL FUNCTIONS
 //        if(needToPollMaster){
     RevBulkData newDataMaster;
     try{
-      newDataMaster = revTx.getBulkInputData();
+      newDataMaster = revMaster.getBulkInputData();
       if(newDataMaster != null){
         revExpansionMasterBulkData = newDataMaster;
       }
@@ -225,15 +216,19 @@ UTIL FUNCTIONS
       //don't set anything if we get an exception
     }
 
-
-    for(RevMotor revMotor : motors) {
-      if (revMotor == null) {
+/*
+    for(DcMotor dcMotor : motors) {
+      if (dcMotor == null) {
         continue;
       }
       if (revExpansionMasterBulkData != null) {
-        revMotor.setEncoderReading(revExpansionMasterBulkData.getMotorCurrentPosition(revMotor.myMotor));
+        revExpansionMasterBulkData.getMotorCurrentPosition(dcMotor);
       }
     }
+    */
+
+    currentXTicks = revExpansionMasterBulkData.getMotorCurrentPosition(dt.fl);
+    currentYTicks = revExpansionMasterBulkData.getMotorCurrentPosition(dt.fr);
 
   }
 }

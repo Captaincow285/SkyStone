@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.test;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 import org.firstinspires.ftc.teamcode.lib.movement.Point;
@@ -14,11 +13,10 @@ import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 //@Config
 @Autonomous
-@Disabled
 public class GoToPoint extends Robot {
 
   ArrayList<Pose> points = new ArrayList<>();
-  int auto;
+ // int auto;
 
   @Override
   public void init(){
@@ -28,6 +26,7 @@ public class GoToPoint extends Robot {
 
     autoState = AutoStates.START;
     auto = 0;
+    roboState = RobotStates.MOVING_TO_TARGET;
 
   }
 
@@ -39,8 +38,8 @@ public class GoToPoint extends Robot {
   @Override
   public void loop(){
     super.loop();
-/*
-    applyTarget();
+
+    //applyTarget();
 
 
     switch (auto){
@@ -52,14 +51,16 @@ public class GoToPoint extends Robot {
 
       case 1: {
 
-        setTarget(new Pose(30,30, 0));
+        dt.setTarget(new Pose(-20,20, 0));
+
+
 
         break;
       }
 
       case 2: {
 
-        setTarget(new Pose(0,0, 0));
+        dt.setTarget(new Pose(0,0, 0));
 
         break;
       }

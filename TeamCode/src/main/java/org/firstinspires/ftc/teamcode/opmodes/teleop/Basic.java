@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
 
-import static org.firstinspires.ftc.teamcode.lib.movement.RobotMovement.manualControl;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.strafeConstant;
 
 @TeleOp (group = "Basic")
@@ -25,8 +24,14 @@ public class Basic extends Robot {
     public void loop() {
         super.loop();
 
-        manualControl(gamepad1);
-        intake.manaualControl(gamepad2);
+        dt.manualControl(gamepad1);
+        intake.setTarget(gamepad1.left_trigger - gamepad1.right_trigger);
+
+        if(gamepad1.left_bumper){
+            fm.setTarget(false);
+        } else if(gamepad1.right_bumper){
+            fm.setTarget(true);
+        }
 
 
 
