@@ -120,7 +120,10 @@ public class Robot extends OpMode{
     //telemetry.addLine("");
     //telemetry.addLine("auto state: " + auto);
     telemetry.addLine("");
-    //telemetry.addLine("robot state: " + roboState);
+    telemetry.addLine("robot state: " + roboState);
+    telemetry.addLine("");
+    telemetry.addLine("auto state: " + autoStateLZ);
+    telemetry.addLine("");
     //telemetry.addLine("strafe const: " + strafeConstant);
 
     telemetry.addLine("targetX: " + xTarget);
@@ -169,7 +172,7 @@ public class Robot extends OpMode{
   */
   private void updateAtTargetAlt(){
 
-    if(PIDx.getError() < 1 && PIDy.getError() < 1){
+    if((PIDx.getError() < 1 && PIDy.getError() < 1) && roboState == RobotStates.MOVING_TO_TARGET){
       roboState = RobotStates.AT_TARGET;
       wxRelative = 0;
       wyRelative = 0;

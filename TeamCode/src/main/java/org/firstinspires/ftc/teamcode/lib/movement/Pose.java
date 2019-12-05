@@ -38,6 +38,10 @@ public class Pose{
         this.y = y;
         this.a = a;
 
+        worldXPosition = x;
+        worldYPosition = y;
+        worldAngle_rad = a;
+
     }
 
     /**

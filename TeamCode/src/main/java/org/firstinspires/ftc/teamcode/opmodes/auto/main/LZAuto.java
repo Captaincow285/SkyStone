@@ -30,7 +30,7 @@ public class LZAuto extends Robot {
     super.init();
 
     //change this to use absolute positions (idk what to base it on) but rn its relative
-    setPose((ROBOT_WIDTH/2),0,0);
+    setPose((ROBOT_WIDTH/2),81.28,0);
 
     isAuto(true);
 
@@ -76,7 +76,8 @@ public class LZAuto extends Robot {
          */
 
         if(roboState == RobotStates.STOPPED){
-          moveToStone(new Stone(ss_1_position - 1));
+          moveToStone(new Stone(ss_1_position + 1));
+          roboState = RobotStates.MOVING_TO_TARGET;
         } else if(roboState == RobotStates.AT_TARGET){
           roboState = RobotStates.STOPPED;
           autoStateLZ = LZStates.GRAB_SS_1;
@@ -92,7 +93,10 @@ public class LZAuto extends Robot {
         intake.setTarget(1);
 
 
-        if(roboState == RobotStates.AT_TARGET){
+        if(roboState == RobotStates.STOPPED){
+          moveToStone(new Stone(ss_1_position));
+          roboState = RobotStates.MOVING_TO_TARGET;
+        } else if(roboState == RobotStates.AT_TARGET){
           roboState = RobotStates.STOPPED;
           autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
         }
@@ -103,6 +107,7 @@ public class LZAuto extends Robot {
 
       case MOVE_TO_FOUNDATION:{
 
+        break;
       }
 
       case END: {
