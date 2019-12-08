@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto.main;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 import org.firstinspires.ftc.teamcode.lib.movement.CurvePoint;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
@@ -16,7 +19,7 @@ import java.util.ArrayList;
 import static org.firstinspires.ftc.teamcode.lib.movement.Pose.setPose;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
-
+@Config
 @Autonomous (group = "main")
 public class LZAuto extends Robot {
 
@@ -24,6 +27,10 @@ public class LZAuto extends Robot {
   int ss_2_position = 4;
 
   Quarry quarry = new Quarry();
+
+  FtcDashboard dashboard = FtcDashboard.getInstance();
+  Telemetry dashboardTelemetry = dashboard.getTelemetry();
+
 
   @Override
   public void init(){
@@ -47,11 +54,18 @@ public class LZAuto extends Robot {
 
     //super.telemetry.addLine("");
 
+    super.init_loop();
+
+    telemetry.addLine("stone position: " + quarry.getRoughStonePosition(4));
+    super.telemetry.addLine("stone position: " + quarry.getRoughStonePosition(4));
+
+    setPose((ROBOT_WIDTH/2),81.28,0);
   }
 
   @Override
   public void loop(){
     super.loop();
+
 
     switch(autoStateLZ){
 
@@ -83,15 +97,12 @@ public class LZAuto extends Robot {
           autoStateLZ = LZStates.GRAB_SS_1;
         }
 
-
         break;
-
       }
 
       case GRAB_SS_1: {
 
         intake.setTarget(1);
-
 
         if(roboState == RobotStates.STOPPED){
           moveToStone(new Stone(ss_1_position));
@@ -120,12 +131,14 @@ public class LZAuto extends Robot {
 
     }
 
+    telemetry.addLine("stone position: " + quarry.getRoughStonePosition(4));
+
 
   }
 
   public void moveToStone(Stone targetStone){
 
-      dt.setTarget(new Point( (ORIGIN_TO_STONES + (ROBOT_WIDTH/2)),(quarry.getRoughStonePosition(targetStone.getPosition())) - (ROBOT_LENGTH / 2)));
+      dt.setTarget(new Point( (ORIGIN_TO_STONES),(quarry.getRoughStonePosition(targetStone.getPosition()))));
 
 
 

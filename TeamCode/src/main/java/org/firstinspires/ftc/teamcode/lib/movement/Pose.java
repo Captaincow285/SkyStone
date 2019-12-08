@@ -38,10 +38,6 @@ public class Pose{
         this.y = y;
         this.a = a;
 
-        worldXPosition = x;
-        worldYPosition = y;
-        worldAngle_rad = a;
-
     }
 
     /**
@@ -69,6 +65,10 @@ public class Pose{
         x = newX;
         y = newY;
         a = newA;
+
+        worldXPosition = x;
+        worldYPosition = y;
+        worldAngle_rad = a;
     }
 
     public static void PosCalcRelative(double y, double x){

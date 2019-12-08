@@ -76,6 +76,14 @@ public class Robot extends OpMode{
   }
 
   @Override
+  public void init_loop(){
+
+    telemetry.addLine("wx: " + worldXPosition);
+    telemetry.addLine("wy: " + worldYPosition);
+    telemetry.update();
+  }
+
+  @Override
   public void loop() {
 
     //gets sensor data

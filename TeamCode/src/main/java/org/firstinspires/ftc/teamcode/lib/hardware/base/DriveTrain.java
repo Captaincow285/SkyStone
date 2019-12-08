@@ -54,10 +54,6 @@ public class DriveTrain{
 
     //initMotors();
 
-    worldXPosition = 0;
-    worldYPosition = 0;
-    worldAngle_rad = Math.toRadians(0);
-
   }
 
   /**
