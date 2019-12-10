@@ -17,14 +17,14 @@ public class Elevator extends Subsystem {
 
     private double target = 0;
 
-    private final double TICKS_TO_INCHES = 1;
-    private final double INCHES_TO_TICKS = 1;
+    private final double TICKS_PER_INCH = 1000;
+    private final double INCHES_PER_TICK = 1;
 
     /**
      * sets up the Elevator class
      * @param elev representing the hardware location of the motor that controls the Elevator
      */
-    public void setup(DcMotor elev){
+    public void init(DcMotor elev){
 
         elevator = elev;
 
@@ -52,12 +52,16 @@ public class Elevator extends Subsystem {
      */
     public void setTarget(double target) {
 
-        PIDe.setSetpoint(target * INCHES_TO_TICKS);
+        PIDe.setSetpoint(target * TICKS_PER_INCH);
 
     }
 
     @Override
     public void finishJob() {
 
+    }
+
+    public int getCurrentTicks(){
+        return elevator.getCurrentPosition();
     }
 }

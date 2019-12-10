@@ -11,7 +11,7 @@ public class IntakeTest extends OpMode{
     @Override
     public void init() {
 
-        frank.init(hardwareMap.dcMotor.get("frankLeft"), hardwareMap.dcMotor.get("frankRight"));
+        //frank.init(hardwareMap.dcMotor.get("frankLeft"));
 
     }
 

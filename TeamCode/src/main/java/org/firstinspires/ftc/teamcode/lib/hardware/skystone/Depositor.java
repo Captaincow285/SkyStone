@@ -17,7 +17,7 @@ public class Depositor extends Subsystem {
 
     private final double INCHES_TO_TICKS = 1;
 
-    public void setup(DcMotor depos){
+    public void init(DcMotor depos){
 
         depositor = depos;
 
@@ -48,5 +48,9 @@ public class Depositor extends Subsystem {
     @Override
     public void finishJob() {
 
+    }
+
+    public int getCurrentTicks(){
+        return depositor.getCurrentPosition();
     }
 }

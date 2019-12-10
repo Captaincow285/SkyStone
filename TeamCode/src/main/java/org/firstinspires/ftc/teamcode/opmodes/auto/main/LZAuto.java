@@ -56,10 +56,7 @@ public class LZAuto extends Robot {
 
     super.init_loop();
 
-    telemetry.addLine("stone position: " + quarry.getRoughStonePosition(4));
-    super.telemetry.addLine("stone position: " + quarry.getRoughStonePosition(4));
-
-    setPose((ROBOT_WIDTH/2),81.28,0);
+    setPose((ROBOT_WIDTH/2),81.28, 0);
   }
 
   @Override
@@ -85,7 +82,7 @@ public class LZAuto extends Robot {
 
         skystone pos is 0 to 5
 
-        treat the back edge of the first stone as (0,0), you move to (0, (ss_pos * length of block) - (robot_length/2))
+        treat the center of the back edge of the first stone as (0,0), you move to (0, (ss_pos * length of block) - (robot_length/2))
 
          */
 
@@ -95,6 +92,7 @@ public class LZAuto extends Robot {
         } else if(roboState == RobotStates.AT_TARGET){
           roboState = RobotStates.STOPPED;
           autoStateLZ = LZStates.GRAB_SS_1;
+          
         }
 
         break;

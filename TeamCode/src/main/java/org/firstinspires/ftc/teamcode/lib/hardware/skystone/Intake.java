@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.lib.hardware.base.Subsystem;
 
 public class Intake extends Subsystem {
 
-    private DcMotor left, right;
+    private DcMotor intake;
 
     private double leftTarget, rightTarget, target;
 
@@ -16,21 +16,16 @@ public class Intake extends Subsystem {
 
     }
 
-    public void init(DcMotor left, DcMotor right) {
+    public void init(DcMotor intake) {
 
-        this.left = left;
-        this.right = right;
+        this.intake = intake;
 
-        this.left.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        this.left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        this.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        this.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
@@ -40,8 +35,7 @@ public class Intake extends Subsystem {
     @Override
     public void update() {
 
-        left.setPower(target);
-        right.setPower(target);
+        intake.setPower(target);
 
     }
 
@@ -61,13 +55,6 @@ public class Intake extends Subsystem {
 
         this.target = target;
 
-
-    }
-
-    public void setTarget(double leftTarget, double rightTarget){
-
-        this.leftTarget = leftTarget;
-        this.rightTarget = rightTarget;
 
     }
 

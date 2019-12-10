@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Depositor;
+import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Elevator;
 import org.firstinspires.ftc.teamcode.lib.hardware.skystone.FoundationMover;
 import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Intake;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
@@ -49,6 +51,8 @@ public class Robot extends OpMode{
   public DriveTrain dt = new DriveTrain();
   public Intake intake = new Intake();
   public FoundationMover fm = new FoundationMover();
+  public Elevator elevator = new Elevator();
+  public Depositor depositor = new Depositor();
 
   //public FtcDashboard dashboard = FtcDashboard.getInstance();
   //public TelemetryPacket packet = new TelemetryPacket();
@@ -71,7 +75,9 @@ public class Robot extends OpMode{
     
     dt.initMotors(motors);
     fm.init(hardwareMap.get(Servo.class, "fmLeft"), hardwareMap.get(Servo.class, "fmRight"));
-    intake.init(hardwareMap.get(DcMotor.class, "intakeLeft"), hardwareMap.get(DcMotor.class, "intakeRight"));
+    intake.init(hardwareMap.get(DcMotor.class, "intake"));
+    elevator.init(hardwareMap.get(DcMotor.class, "elevator"));
+    depositor.init(hardwareMap.get(DcMotor.class, "depositor"));
 
   }
 
@@ -101,6 +107,8 @@ public class Robot extends OpMode{
     }
     intake.update();
     fm.update();
+    elevator.update();
+    depositor.update();
 
     //fetch our rotation in radians from the imu
     //worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
@@ -134,8 +142,13 @@ public class Robot extends OpMode{
     telemetry.addLine("");
     //telemetry.addLine("strafe const: " + strafeConstant);
 
-    telemetry.addLine("targetX: " + xTarget);
-    telemetry.addLine("targetY: " + yTarget);
+    //telemetry.addLine("targetX: " + xTarget);
+    //telemetry.addLine("targetY: " + yTarget);
+
+    telemetry.addLine("");
+    telemetry.addLine("elevator position: " + elevator.getCurrentTicks());
+    telemetry.addLine("");
+    telemetry.addLine("depositor position: " + depositor.getCurrentTicks());
 
     telemetry.update();
 

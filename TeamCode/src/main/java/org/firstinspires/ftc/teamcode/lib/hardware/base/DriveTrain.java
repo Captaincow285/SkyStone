@@ -71,8 +71,13 @@ public class DriveTrain{
     bl = motors[2];
     br = motors[3];
 
+    /*
     fl.setDirection(DcMotorSimple.Direction.REVERSE);
     bl.setDirection(DcMotorSimple.Direction.REVERSE);
+    */
+
+    fr.setDirection(DcMotorSimple.Direction.REVERSE);
+    br.setDirection(DcMotorSimple.Direction.REVERSE);
 
     fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

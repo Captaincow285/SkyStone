@@ -33,6 +33,9 @@ public class Basic extends Robot {
             fm.setTarget(true);
         }
 
+        elevator.setTarget(gamepad2.right_stick_y);
+        depositor.setTarget(gamepad2.right_trigger - gamepad2.left_trigger);
+
 
 
     }
