@@ -33,7 +33,7 @@ public class Elevator extends Subsystem {
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        PIDe = new PIDController(eKp, eKi, eKp);
+        PIDe = new PIDController(eKp, eKi, eKd);
 
         PIDe.setSetpoint(target);
 

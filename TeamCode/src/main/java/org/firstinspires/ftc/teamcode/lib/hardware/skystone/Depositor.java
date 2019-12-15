@@ -26,7 +26,7 @@ public class Depositor extends Subsystem {
         depositor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         depositor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        PIDd = new PIDController(dKp, dKi, dKp);
+        PIDd = new PIDController(dKp, dKi, dKd);
 
         PIDd.setSetpoint(target);
 

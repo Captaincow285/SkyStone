@@ -10,40 +10,61 @@ import org.firstinspires.ftc.teamcode.lib.util.GlobalVars;
 //probably add the extra S4T encoder onto this
 public class Clamp extends Subsystem {
 
-    GlobalVars.RobotStates clampState = GlobalVars.RobotStates.STOPPED;
+    GlobalVars.ClawStates clampState = GlobalVars.ClawStates.IDLE;
 
-    private Servo clamp;
+    private Servo plate, nub;
 
     private double target;
     //private boolean target;
 
-    private final double TARGET_POSITION = 1;
+    private double TARGET_POSITION = 1;
+
+    private final double NUB_CLOSED = 0.45;
+    private final double NUB_OPEN = 1;
+    private final double PLATE_CLOSED = 0.65;
+    private final double PLATE_OPEN = 1;
 
     //private final double GEAR_REDUCTION = 1;
     //private final double INCHES_TO_TICKS = 1;
 
     private DigitalChannel touch;
 
-    public void setup(Servo clamp, DigitalChannel dc){
+    public void init(Servo plate, Servo nub){
     //public void setup(CRServo clamp){
 
-        this.clamp = clamp;
-        this.touch = dc;
+        this.plate = plate;
+        this.nub = nub;
 
     }
 
     @Override
     public void update() {
 
+        switch(clampState){
+            case IDLE: {
+                plate.setPosition(PLATE_CLOSED);
+                nub.setPosition(NUB_OPEN);
+                break;
+            }
+            case GRIPPING: {
+                plate.setPosition(PLATE_CLOSED);
+                nub.setPosition(NUB_CLOSED);
+                break;
+            }
+            case DEPOSITING:{
+                plate.setPosition(PLATE_OPEN);
+                nub.setPosition(NUB_OPEN);
+                break;
+            }
 
+        }
 
     }
 
 
-    public void setTarget(double target) {
+    public void setTarget(GlobalVars.ClawStates target) {
 
-        this.target = target;
-        clampState = GlobalVars.RobotStates.MOVING_TO_TARGET;
+        clampState = target;
 
     }
 

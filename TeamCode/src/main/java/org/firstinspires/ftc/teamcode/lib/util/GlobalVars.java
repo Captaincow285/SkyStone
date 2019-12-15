@@ -74,8 +74,12 @@ public class GlobalVars {
         FINISHED, AT_TARGET, MOVING_TO_TARGET, MOVING, STOPPED
     }
 
+    public enum ClawStates{
+        DEPOSITING, GRIPPING, IDLE
+    }
 
 
+    public static ClawStates clawState = ClawStates.IDLE;
 
 
     public static RobotStates roboState = RobotStates.STOPPED;
@@ -103,7 +107,7 @@ public class GlobalVars {
     public static double aKi = 0;
     public static double aKd = 0;
 
-    public static double eKp = 0.03;
+    public static double eKp = 0.01;
     public static double eKi = 0;
     public static double eKd = 0;
 

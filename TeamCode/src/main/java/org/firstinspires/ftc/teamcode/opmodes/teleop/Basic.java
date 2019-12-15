@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
+import org.firstinspires.ftc.teamcode.lib.util.GlobalVars;
 
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.strafeConstant;
 
@@ -35,6 +36,14 @@ public class Basic extends Robot {
 
         elevator.setTarget(gamepad2.right_stick_y);
         depositor.setTarget(gamepad2.right_trigger - gamepad2.left_trigger);
+
+        if(gamepad2.right_bumper){
+            clamp.setTarget(GlobalVars.ClawStates.GRIPPING);
+        } else if(gamepad2.left_bumper){
+            clamp.setTarget(GlobalVars.ClawStates.DEPOSITING);
+        } else if(gamepad2.right_stick_button){
+            clamp.setTarget(GlobalVars.ClawStates.IDLE);
+        }
 
 
 

@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Clamp;
 import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Depositor;
 import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Elevator;
 import org.firstinspires.ftc.teamcode.lib.hardware.skystone.FoundationMover;
@@ -53,6 +54,7 @@ public class Robot extends OpMode{
   public FoundationMover fm = new FoundationMover();
   public Elevator elevator = new Elevator();
   public Depositor depositor = new Depositor();
+  public Clamp clamp = new Clamp();
 
   //public FtcDashboard dashboard = FtcDashboard.getInstance();
   //public TelemetryPacket packet = new TelemetryPacket();
@@ -78,6 +80,7 @@ public class Robot extends OpMode{
     intake.init(hardwareMap.get(DcMotor.class, "intake"));
     elevator.init(hardwareMap.get(DcMotor.class, "elevator"));
     depositor.init(hardwareMap.get(DcMotor.class, "depositor"));
+    clamp.init(hardwareMap.get(Servo.class, "plate"), hardwareMap.get(Servo.class, "nub"));
 
   }
 
@@ -109,6 +112,7 @@ public class Robot extends OpMode{
     fm.update();
     elevator.update();
     depositor.update();
+    clamp.update();
 
     //fetch our rotation in radians from the imu
     //worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
