@@ -25,8 +25,8 @@ public class FoundationMover extends Subsystem {
         right.setPosition(1 - targetPosition);
     }
 
-    public void setTarget(boolean isDown){
-        targetPosition = isDown ? 0.75 : 0;
+    public void setTarget(boolean isUp){
+        targetPosition = isUp ? 0.5 : 0;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class Clamp extends Subsystem {
 
     private final double NUB_CLOSED = 0.45;
     private final double NUB_OPEN = 1;
-    private final double PLATE_CLOSED = 0.65;
+    private final double PLATE_CLOSED = 0.635;
     private final double PLATE_OPEN = 1;
 
     //private final double GEAR_REDUCTION = 1;

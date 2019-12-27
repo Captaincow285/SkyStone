@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
 import org.firstinspires.ftc.teamcode.lib.movement.MyPosition;
 import org.firstinspires.ftc.teamcode.lib.util.GlobalVars;
 
+import static org.firstinspires.ftc.teamcode.lib.movement.Pose.setPose;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.strafeConstant;
 
 @TeleOp (group = "Basic")
@@ -18,6 +19,8 @@ public class Basic extends Robot {
         super.init();
 
         isAuto(false);
+
+        setPose(0,0,0);
 
     }
 

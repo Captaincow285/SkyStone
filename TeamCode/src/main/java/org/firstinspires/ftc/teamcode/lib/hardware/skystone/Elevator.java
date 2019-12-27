@@ -16,9 +16,12 @@ public class Elevator extends Subsystem {
     private PIDController PIDe;
 
     private double target = 0;
+    private double lastTarget = 0;
 
-    private final double TICKS_PER_INCH = 1000;
+    private final double TICKS_PER_INCH = 1;
     private final double INCHES_PER_TICK = 1;
+
+
 
     /**
      * sets up the Elevator class
@@ -42,7 +45,9 @@ public class Elevator extends Subsystem {
     @Override
     public void update() {
 
-        elevator.setPower(PIDe.getOutput(elevator.getCurrentPosition()));
+        //elevator.setPower(PIDe.getOutput(elevator.getCurrentPosition()));
+        elevator.setPower(target);
+
 
     }
 
@@ -52,7 +57,11 @@ public class Elevator extends Subsystem {
      */
     public void setTarget(double target) {
 
-        PIDe.setSetpoint(target * TICKS_PER_INCH);
+        this.target =  target * TICKS_PER_INCH;
+
+        PIDe.setSetpoint((this.target) + lastTarget);
+
+        lastTarget = this.target;
 
     }
 

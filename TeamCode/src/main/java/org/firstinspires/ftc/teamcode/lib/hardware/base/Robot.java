@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.lib.hardware.skystone.Clamp;
@@ -56,6 +57,8 @@ public class Robot extends OpMode{
   public Depositor depositor = new Depositor();
   public Clamp clamp = new Clamp();
 
+  public static ElapsedTime timer = new ElapsedTime();
+
   //public FtcDashboard dashboard = FtcDashboard.getInstance();
   //public TelemetryPacket packet = new TelemetryPacket();
 
@@ -90,6 +93,10 @@ public class Robot extends OpMode{
     telemetry.addLine("wx: " + worldXPosition);
     telemetry.addLine("wy: " + worldYPosition);
     telemetry.update();
+
+    fm.update();
+
+    timer.reset();
   }
 
   @Override
@@ -139,6 +146,8 @@ public class Robot extends OpMode{
    // telemetry.addLine("a: " + dt.bl.getCurrentPosition());
     //telemetry.addLine("");
     //telemetry.addLine("auto state: " + auto);
+      telemetry.addLine("");
+      telemetry.addLine("seconds: " + timer.seconds());
     telemetry.addLine("");
     telemetry.addLine("robot state: " + roboState);
     telemetry.addLine("");
@@ -153,6 +162,8 @@ public class Robot extends OpMode{
     telemetry.addLine("elevator position: " + elevator.getCurrentTicks());
     telemetry.addLine("");
     telemetry.addLine("depositor position: " + depositor.getCurrentTicks());
+
+
 
     telemetry.update();
 
@@ -197,7 +208,7 @@ public class Robot extends OpMode{
   */
   private void updateAtTargetAlt(){
 
-    if((PIDx.getError() < 1 && PIDy.getError() < 1) && roboState == RobotStates.MOVING_TO_TARGET){
+    if((PIDx.getError() < 2 && PIDy.getError() < 2) && roboState == RobotStates.MOVING_TO_TARGET){
       roboState = RobotStates.AT_TARGET;
       wxRelative = 0;
       wyRelative = 0;
