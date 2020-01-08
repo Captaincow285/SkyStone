@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.lib.util.Skystone.Stone;
 
 import java.util.ArrayList;
 
+import static org.firstinspires.ftc.teamcode.lib.hardware.base.DriveTrain.PIDx;
+import static org.firstinspires.ftc.teamcode.lib.hardware.base.DriveTrain.PIDy;
 import static org.firstinspires.ftc.teamcode.lib.movement.Pose.setPose;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
@@ -28,8 +30,6 @@ public class LZAuto extends Robot {
 
   Quarry quarry = new Quarry();
 
-  FtcDashboard dashboard = FtcDashboard.getInstance();
-  Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
 
   @Override
@@ -37,12 +37,13 @@ public class LZAuto extends Robot {
     super.init();
 
     //change this to use absolute positions (idk what to base it on) but rn its relative
-    setPose((ROBOT_WIDTH/2),81.28,0);
+   // setPose((ROBOT_WIDTH/2),81.28,0);
 
     isAuto(true);
 
     quarry.populateQuarry();
 
+    setPose(0,0, 0);
 
   }
 
@@ -56,7 +57,9 @@ public class LZAuto extends Robot {
 
     super.init_loop();
 
-    setPose((ROBOT_WIDTH/2),81.28, 0);
+    setPose(0,0, 0);
+
+    intake.setUsingSensor(true);
   }
 
   @Override
@@ -70,6 +73,7 @@ public class LZAuto extends Robot {
 
         roboState = RobotStates.STOPPED;
         autoStateLZ = LZStates.MOVE_TO_SS_1;
+          setPose(0,0, 0);
 
         break;
       }
@@ -86,13 +90,9 @@ public class LZAuto extends Robot {
 
          */
 
-        if(roboState == RobotStates.STOPPED){
-          moveToStone(new Stone(ss_1_position + 1));
-          roboState = RobotStates.MOVING_TO_TARGET;
-        } else if(roboState == RobotStates.AT_TARGET){
-          roboState = RobotStates.STOPPED;
-          autoStateLZ = LZStates.GRAB_SS_1;
-          
+        dt.setTarget(new Point(93, 0));
+        if(Math.abs(93 - worldXPosition)<= 2){
+            autoStateLZ = LZStates.GRAB_SS_1;
         }
 
         break;
@@ -100,21 +100,24 @@ public class LZAuto extends Robot {
 
       case GRAB_SS_1: {
 
-        intake.setTarget(1);
-
-        if(roboState == RobotStates.STOPPED){
-          moveToStone(new Stone(ss_1_position));
-          roboState = RobotStates.MOVING_TO_TARGET;
-        } else if(roboState == RobotStates.AT_TARGET){
-          roboState = RobotStates.STOPPED;
-          autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
+        intake.setTarget(-1);
+        dt.setTarget(new Point(93, -10));
+        if(Math.abs(-10 - worldYPosition)<= 1.5){
+              autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
         }
+
 
 
         break;
       }
 
       case MOVE_TO_FOUNDATION:{
+
+          //if(Math.abs(50 - worldXPosition)<= 2){
+            //  dt.setTarget(new Point(50, 50));
+          //}
+
+          dt.setTarget(new Point(50, 0));
 
         break;
       }

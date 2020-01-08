@@ -18,8 +18,10 @@ public class Elevator extends Subsystem {
     private double target = 0;
     private double lastTarget = 0;
 
-    private final double TICKS_PER_INCH = 1;
+    private final double TICKS_PER_INCH = 3400;
     private final double INCHES_PER_TICK = 1;
+
+    private boolean elevatorLocked = false;
 
 
 
@@ -35,18 +37,24 @@ public class Elevator extends Subsystem {
 
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //elevator.setTargetPosition(0);
+        //elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         PIDe = new PIDController(eKp, eKi, eKd);
 
         PIDe.setSetpoint(target);
+        //PIDe.setSetpointRange(100);
+
 
     }
 
     @Override
     public void update() {
 
-        //elevator.setPower(PIDe.getOutput(elevator.getCurrentPosition()));
-        elevator.setPower(target);
+        elevator.setPower(PIDe.getOutput(elevator.getCurrentPosition()));
+        //elevator.setTargetPosition((int)target);
+        //elevator.setPower(0.5);
+        //elevator.setPower(target);
 
 
     }
@@ -57,12 +65,29 @@ public class Elevator extends Subsystem {
      */
     public void setTarget(double target) {
 
-        this.target =  target * TICKS_PER_INCH;
+        if(target <= 0){
+            target = 0;
+        }
 
-        PIDe.setSetpoint((this.target) + lastTarget);
+        if(elevatorLocked){
+            this.target = lastTarget;
+        } else {
+            this.target = target * TICKS_PER_INCH;
 
-        lastTarget = this.target;
+            PIDe.setSetpoint(this.target);
 
+            //lastTarget = this.target;
+        }
+
+    }
+
+    public void setElevatorLocked(boolean state){
+        elevatorLocked = state;
+        lastTarget = elevator.getCurrentPosition();
+    }
+
+    public double getTarget(){
+        return target;
     }
 
     @Override

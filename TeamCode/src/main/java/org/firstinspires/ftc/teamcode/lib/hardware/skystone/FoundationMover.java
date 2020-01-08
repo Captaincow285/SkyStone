@@ -17,6 +17,8 @@ public class FoundationMover extends Subsystem {
     public void init(Servo left, Servo right){
         this.left = left;
         this.right = right;
+
+
     }
 
     @Override
@@ -26,12 +28,18 @@ public class FoundationMover extends Subsystem {
     }
 
     public void setTarget(boolean isUp){
-        targetPosition = isUp ? 0.5 : 0;
+        targetPosition = isUp ? .65 : 0;
     }
 
     @Override
     public void finishJob() {
 
     }
+
+    public boolean getAtTarget(){
+        return left.getPosition() == targetPosition;
+
+    }
+
 
 }

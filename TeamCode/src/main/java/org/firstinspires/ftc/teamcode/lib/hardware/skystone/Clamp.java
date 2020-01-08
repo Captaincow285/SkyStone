@@ -21,8 +21,9 @@ public class Clamp extends Subsystem {
 
     private final double NUB_CLOSED = 0.45;
     private final double NUB_OPEN = 1;
-    private final double PLATE_CLOSED = 0.635;
-    private final double PLATE_OPEN = 1;
+    private final double PLATE_CLOSED = 0.56;
+    private final double PLATE_IDLE = 0.90;
+    private final double PLATE_OPEN = 0.6;
 
     //private final double GEAR_REDUCTION = 1;
     //private final double INCHES_TO_TICKS = 1;
@@ -42,7 +43,7 @@ public class Clamp extends Subsystem {
 
         switch(clampState){
             case IDLE: {
-                plate.setPosition(PLATE_CLOSED);
+                plate.setPosition(PLATE_IDLE);
                 nub.setPosition(NUB_OPEN);
                 break;
             }

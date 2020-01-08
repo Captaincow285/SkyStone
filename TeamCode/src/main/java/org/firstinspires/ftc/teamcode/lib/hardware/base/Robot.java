@@ -4,8 +4,10 @@ package org.firstinspires.ftc.teamcode.lib.hardware.base;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -80,9 +82,9 @@ public class Robot extends OpMode{
     
     dt.initMotors(motors);
     fm.init(hardwareMap.get(Servo.class, "fmLeft"), hardwareMap.get(Servo.class, "fmRight"));
-    intake.init(hardwareMap.get(DcMotor.class, "intake"));
+    intake.init(hardwareMap.get(DcMotor.class, "intake"), hardwareMap.get(ColorSensor.class, "intakeSensor"));
     elevator.init(hardwareMap.get(DcMotor.class, "elevator"));
-    depositor.init(hardwareMap.get(DcMotor.class, "depositor"));
+    depositor.init(hardwareMap.get(Servo.class, "depositor"));
     clamp.init(hardwareMap.get(Servo.class, "plate"), hardwareMap.get(Servo.class, "nub"));
 
   }
@@ -94,9 +96,16 @@ public class Robot extends OpMode{
     telemetry.addLine("wy: " + worldYPosition);
     telemetry.update();
 
+    fm.setTarget(true);
     fm.update();
 
-    timer.reset();
+
+    depositor.setTarget(1);
+    depositor.update();
+
+
+
+      timer.reset();
   }
 
   @Override
@@ -147,7 +156,7 @@ public class Robot extends OpMode{
     //telemetry.addLine("");
     //telemetry.addLine("auto state: " + auto);
       telemetry.addLine("");
-      telemetry.addLine("seconds: " + timer.seconds());
+      telemetry.addLine("intakeSensorGreen: " + intake.getSensorReading());
     telemetry.addLine("");
     telemetry.addLine("robot state: " + roboState);
     telemetry.addLine("");
@@ -159,9 +168,9 @@ public class Robot extends OpMode{
     //telemetry.addLine("targetY: " + yTarget);
 
     telemetry.addLine("");
-    telemetry.addLine("elevator position: " + elevator.getCurrentTicks());
-    telemetry.addLine("");
-    telemetry.addLine("depositor position: " + depositor.getCurrentTicks());
+    telemetry.addLine("deposit target: " + depositor.getTarget());
+    //telemetry.addLine("");
+    //telemetry.addLine("elevator target: " + elevator.getTarget());
 
 
 

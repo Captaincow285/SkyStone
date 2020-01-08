@@ -41,7 +41,7 @@ public class DriveTrain{
   //last update time
   private long lastUpdateTime = 0;
 
-  private double maxMotorPowerAuto = 0.6;
+  private double maxMotorPowerAuto = 0.4;
 
   //pid controller objects
   public static PIDController PIDx = new PIDController(xKp, xKi, xKd);
@@ -113,7 +113,7 @@ public class DriveTrain{
     public void manualControl(Gamepad gamepad){
 
         movement_x = Range.clip(gamepad.left_stick_x, -1, 1);
-        movement_y = Range.clip(gamepad.left_stick_y, -1, 1);
+        movement_y = Range.clip(-gamepad.left_stick_y, -1, 1);
         movement_turn = Range.clip(gamepad.right_stick_x, -1, 1);
 
     }

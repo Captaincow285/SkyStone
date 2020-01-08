@@ -19,8 +19,10 @@ import java.util.ArrayList;
 
 import static org.firstinspires.ftc.teamcode.lib.movement.Pose.setPose;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.LZStates.END;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.LZStates.PARK_NEAR;
 
-@Config
+//@Config
 @Autonomous (group = "main")
 public class BZAuto extends Robot {
 
@@ -29,8 +31,11 @@ public class BZAuto extends Robot {
 
     Quarry quarry = new Quarry();
 
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+    //FtcDashboard dashboard = FtcDashboard.getInstance();
+    //Telemetry dashboardTelemetry = dashboard.getTelemetry();
+
+
+    ElapsedTime timer = new ElapsedTime();
 
 
 
@@ -47,6 +52,7 @@ public class BZAuto extends Robot {
         //quarry.populateQuarry();
 
 
+        timer.reset();
     }
 
     @Override
@@ -61,6 +67,7 @@ public class BZAuto extends Robot {
 
         setPose(0,0, 0);
         fm.setTarget(true);
+        autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
     }
 
     @Override
@@ -68,46 +75,83 @@ public class BZAuto extends Robot {
         super.loop();
 
 
-        switch(autoStateLZ){
+        switch(autoStateLZ) {
 
             case START: {
 
                 roboState = RobotStates.STOPPED;
                 autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
                 fm.setTarget(true);
-                //roboState = RobotStates.MOVING_TO_TARGET;
-
+                roboState = RobotStates.AT_TARGET;
+                setPose(0, 0, 0);
+                depositor.setTarget(1);
 
 
                 break;
             }
 
-            case MOVE_TO_FOUNDATION:{
+            case MOVE_TO_FOUNDATION: {
 
-                dt.setTarget(new Pose(0, 80, 0));
 
-                if(roboState == RobotStates.AT_TARGET){
-
-                    fm.setTarget(false);
-                    autoStateLZ = LZStates.END;
+                dt.setTarget(new Point(-38, 71));
+                if (Math.abs(-38 - worldXPosition) <= 2 && Math.abs(71 - worldYPosition) <= 2) {
+                    autoStateLZ = LZStates.MOVE_FOUNDATION;
+                    timer.reset();
                 }
+                fm.setTarget(true);
 
                 break;
+            }
+
+            case MOVE_FOUNDATION: {
+
+            /*
+
+                if(fm.getAtTarget()){
+                    if(dt.PIDy.getError() <= 3 && dt.PIDx.getError() <= 3 && roboState == RobotStates.MOVING_TO_TARGET && timer.seconds() >= 2) {
+
+                        roboState = RobotStates.AT_TARGET;
+                        autoStateLZ = LZStates.END;
+                    }
+
+                    dt.setTarget(new Point(20, 20));
+             */
+
+                fm.setTarget(false);
+
+                if(timer.seconds() >= 1) {
+                    dt.setTarget(new Point(-38, 3));
+                    if (Math.abs(2 - worldYPosition) <= 2) {
+                        autoStateLZ = PARK_NEAR;
+                    }
+                }
+                break;
+
+            }
+
+
+
+            case PARK_NEAR: {
+
+                fm.setTarget(true);
+
+                dt.setTarget(new Point(91, 1));
+                if (Math.abs(91 - worldXPosition) <= 2) {
+                    autoStateLZ = END;
+                }
+
             }
 
             case END: {
 
-                fm.setTarget(false);
 
-                //stop();
+                stop();
                 break;
 
             }
-
-
         }
 
-        telemetry.addLine("stone position: " + quarry.getRoughStonePosition(4));
+        depositor.setTarget(1);
 
 
     }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.lib.hardware.skystone;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Subsystem;
 import org.firstinspires.ftc.teamcode.lib.util.PIDController;
@@ -9,7 +10,8 @@ import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 
 public class Depositor extends Subsystem {
     
-    private DcMotor depositor;
+    //private DcMotor depositor;
+    private Servo depositor;
 
     private PIDController PIDd;
 
@@ -17,7 +19,7 @@ public class Depositor extends Subsystem {
 
     private final double INCHES_TO_TICKS = 1;
 
-    public void init(DcMotor depos){
+    /*public void init(DcMotor depos){
 
         depositor = depos;
 
@@ -30,19 +32,30 @@ public class Depositor extends Subsystem {
 
         PIDd.setSetpoint(target);
 
+    }*/
+
+    public void init(Servo depos){
+        depositor = depos;
+
+        depositor.setPosition(1);
     }
     
     @Override
     public void update() {
 
-        depositor.setPower(PIDd.getOutput(depositor.getCurrentPosition()));
+        //depositor.setPower(PIDd.getOutput(depositor.getCurrentPosition()));
+        depositor.setPosition(target);
 
     }
 
     public void setTarget(double target) {
 
-        PIDd.setSetpoint(target * INCHES_TO_TICKS);
+        this.target = target;
 
+    }
+
+    public double getTarget(){
+        return target;
     }
 
     @Override
@@ -50,7 +63,7 @@ public class Depositor extends Subsystem {
 
     }
 
-    public int getCurrentTicks(){
-        return depositor.getCurrentPosition();
-    }
+    //public int getCurrentTicks(){
+      //  return depositor.getCurrentPosition();
+    //}
 }

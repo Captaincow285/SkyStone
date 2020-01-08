@@ -62,7 +62,7 @@ public class GlobalVars {
     }
 
     public enum LZStates{
-        START, GET_SKYSTONE_LOCATIONS, MOVE_TO_SS_1, GRAB_SS_1, MOVE_TO_FOUNDATION, DEPLOY_YEETER, YEET, DEPOSIT_SS_1, MOVE_TO_SS_2, GRAB_SS_2, DEPOSIT_SS_2, END
+        START, GET_SKYSTONE_LOCATIONS, MOVE_TO_SS_1, GRAB_SS_1, MOVE_TO_FOUNDATION, MOVE_FOUNDATION, DEPLOY_YEETER, YEET, DEPOSIT_SS_1, MOVE_TO_SS_2, GRAB_SS_2, DEPOSIT_SS_2, PARK_NEAR, PARK_FAR, END
     }
 
     public static AutoStates autoState = AutoStates.START;
@@ -107,7 +107,7 @@ public class GlobalVars {
     public static double aKi = 0;
     public static double aKd = 0;
 
-    public static double eKp = 0.01;
+    public static double eKp = 0.001;
     public static double eKi = 0;
     public static double eKd = 0;
 

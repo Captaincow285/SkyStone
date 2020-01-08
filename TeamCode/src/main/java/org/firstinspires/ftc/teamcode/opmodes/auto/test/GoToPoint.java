@@ -51,8 +51,7 @@ public class GoToPoint extends Robot {
 
       case 1: {
 
-        dt.setTarget(new Pose(-20,20, 0));
-
+        dt.setTarget(new Pose(20,20, 0));
 
 
         break;
