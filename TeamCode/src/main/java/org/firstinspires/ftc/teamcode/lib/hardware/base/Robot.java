@@ -113,7 +113,13 @@ public class Robot extends OpMode{
 
     //gets sensor data
     getRevBulkData();
-    
+
+    //calculate our x and y coordinates
+    Pose.PosCalc(
+            currentXTicks,
+            currentYTicks
+    );
+
     //if the robot is not finished, apply the motor powers to the motors
     if(roboState != RobotStates.FINISHED) {
 
@@ -133,22 +139,20 @@ public class Robot extends OpMode{
     //fetch our rotation in radians from the imu
     //worldAngle_rad = Double.parseDouble(df.format(AngleWrap(dt.getGyroRotation(AngleUnit.RADIANS))));
 
-    //calculate our x and y coordinates
-    Pose.PosCalc(
-        currentXTicks,
-        currentYTicks
-    );
+
 
     //update our auto states
     //updateAutoState(); //this is currently done inside the opmode instance
     
     //update our robot states
-    updateAtTargetAlt();
+    //updateAtTargetAlt();
 
     //telemetry.addLine("positions set!");
 
+
     telemetry.addLine("wx: " + worldXPosition);
     telemetry.addLine("wy: " + worldYPosition);
+    /*
     //telemetry.addLine("wa: " + Math.toDegrees(worldAngle_rad));
     telemetry.addLine("");
    // telemetry.addLine("r: " + dt.fr.getCurrentPosition());
@@ -173,8 +177,10 @@ public class Robot extends OpMode{
     //telemetry.addLine("elevator target: " + elevator.getTarget());
 
 
-
+*/
     telemetry.update();
+
+
 
    /* packet.put("wx", worldXPosition);
     packet.put("wy", worldYPosition);

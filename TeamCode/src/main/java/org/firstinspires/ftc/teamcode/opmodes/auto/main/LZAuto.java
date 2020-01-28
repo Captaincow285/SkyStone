@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.main;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.lib.hardware.base.Robot;
@@ -34,6 +35,8 @@ public class LZAuto extends Robot {
 
   private int directionSwitch = 1;
 
+  ElapsedTime timer = new ElapsedTime();
+
 
   @Override
   public void init(){
@@ -49,6 +52,8 @@ public class LZAuto extends Robot {
     setPose(0,0, 0);
 
     autoStateLZ = LZStates.START;
+
+    dt.setMaxMotorPowerAuto(0.45);
 
   }
 
@@ -96,6 +101,7 @@ public class LZAuto extends Robot {
           //dt.setSlowmode(0.3);
 
           directionSwitch = isRed ? -1 : 1;
+          timer.reset();
 
 
         break;
@@ -114,8 +120,8 @@ public class LZAuto extends Robot {
          */
 
 
-        dt.setTarget(new Point(3 * directionSwitch, 55));
-        if(Math.abs(55 - worldYPosition)<= 2){
+        dt.setTarget(new Point(3 * directionSwitch, 60));
+        if((Math.abs(60 - worldYPosition)<= 2) || timer.seconds() >= 3){
             autoStateLZ = LZStates.GRAB_SS_1;
 
             break;
@@ -128,9 +134,9 @@ public class LZAuto extends Robot {
       case GRAB_SS_1: {
 
           intake.setTarget(-1);
-          dt.setTarget(new Point( directionSwitch * 100, 55));
+          dt.setTarget(new Point( directionSwitch * 90, 53));
 
-        if(Math.abs((directionSwitch * 100) - worldXPosition)<= 2 && Math.abs(55 - worldYPosition)<= 2){
+        if(Math.abs((directionSwitch * 90) - worldXPosition)<= 2 && Math.abs(53 - worldYPosition)<= 2){
 
 
               autoStateLZ = LZStates.MOVE_TO_SS_2;
@@ -144,9 +150,10 @@ public class LZAuto extends Robot {
 
         case MOVE_TO_SS_2:{
 
-            dt.setTarget(new Point(directionSwitch * 100, 30));
+            dt.setTarget(new Point(directionSwitch * 90, 20));
 
-            if(intake.isBlockIntaked() || Math.abs(30 - worldYPosition)<= 2){
+            if(intake.isBlockIntaked() || Math.abs(20 - worldYPosition)<= 2){
+
 
 
                 autoStateLZ = LZStates.GRAB_SS_2;
@@ -162,8 +169,8 @@ public class LZAuto extends Robot {
             //  dt.setTarget(new Point(50, 50));
           //}
 
-          dt.setTarget(new Point(directionSwitch * 3, 30));
-          if((Math.abs(directionSwitch * 3 - worldXPosition)<= 2 && Math.abs(30 - worldYPosition)<= 2)){
+          dt.setTarget(new Pose(directionSwitch * 0, 30, 0));
+          if((Math.abs(directionSwitch * 0 - worldXPosition)<= 2 && Math.abs(30 - worldYPosition)<= 2)){
               autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
           }
 
@@ -172,10 +179,11 @@ public class LZAuto extends Robot {
 
         case MOVE_TO_FOUNDATION:{
 
-            dt.setTarget(new Point(directionSwitch * 3, -100));
-            if((Math.abs((directionSwitch * 3) - worldXPosition)<= 2 && Math.abs(-100 - worldYPosition)<= 2)){
+            dt.setTarget(new Point(directionSwitch * 3, -125));
+            if((Math.abs((directionSwitch * 3) - worldXPosition)<= 2 && Math.abs(-125 - worldYPosition)<= 2)){
                 intake.setTarget(1);
                 autoStateLZ = LZStates.MOVE_TO_SS_1;
+                timer.reset();
             }
 
             break;
