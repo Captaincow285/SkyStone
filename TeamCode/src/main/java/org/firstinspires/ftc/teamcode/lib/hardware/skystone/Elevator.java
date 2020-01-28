@@ -51,10 +51,10 @@ public class Elevator extends Subsystem {
     @Override
     public void update() {
 
-        elevator.setPower(PIDe.getOutput(elevator.getCurrentPosition()));
+        //elevator.setPower(PIDe.getOutput(elevator.getCurrentPosition()));
         //elevator.setTargetPosition((int)target);
         //elevator.setPower(0.5);
-        //elevator.setPower(target);
+        elevator.setPower(target);
 
 
     }
@@ -65,9 +65,7 @@ public class Elevator extends Subsystem {
      */
     public void setTarget(double target) {
 
-        if(target <= 0){
-            target = 0;
-        }
+
 
         if(elevatorLocked){
             this.target = lastTarget;
@@ -78,6 +76,8 @@ public class Elevator extends Subsystem {
 
             //lastTarget = this.target;
         }
+
+        this.target = target;
 
     }
 

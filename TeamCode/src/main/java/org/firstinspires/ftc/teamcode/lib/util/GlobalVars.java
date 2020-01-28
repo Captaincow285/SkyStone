@@ -54,8 +54,10 @@ public class GlobalVars {
     //public static boolean isAuto = false;
 
     public enum AutoType{
-        LOADING_FULL
+        RED, BLUE
     }
+
+    public static AutoType autoType = AutoType.RED;
 
     public enum AutoStates{
         START, MOVE, MOVE2, MOVE3, MOVE4, END
@@ -93,12 +95,12 @@ public class GlobalVars {
     public static double strafeConstant = 19.65;
 
     //PIDx
-    public static double xKp = 0.05;
+    public static double xKp = 0.07;
     public static double xKi = 0;
     public static double xKd = 0;
 
     //PIDy
-    public static double yKp = 0.05;
+    public static double yKp = 0.07;
     public static double yKi = 0;
     public static double yKd = 0;
 

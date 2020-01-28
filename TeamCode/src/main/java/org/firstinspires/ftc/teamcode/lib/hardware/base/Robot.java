@@ -82,7 +82,7 @@ public class Robot extends OpMode{
     
     dt.initMotors(motors);
     fm.init(hardwareMap.get(Servo.class, "fmLeft"), hardwareMap.get(Servo.class, "fmRight"));
-    intake.init(hardwareMap.get(DcMotor.class, "intake"), hardwareMap.get(ColorSensor.class, "intakeSensor"));
+    intake.init(hardwareMap.get(DcMotor.class, "intake"), hardwareMap.get(Servo.class, "hitter"), hardwareMap.get(ColorSensor.class, "intakeSensor"));
     elevator.init(hardwareMap.get(DcMotor.class, "elevator"));
     depositor.init(hardwareMap.get(Servo.class, "depositor"));
     clamp.init(hardwareMap.get(Servo.class, "plate"), hardwareMap.get(Servo.class, "nub"));
@@ -96,7 +96,7 @@ public class Robot extends OpMode{
     telemetry.addLine("wy: " + worldYPosition);
     telemetry.update();
 
-    fm.setTarget(true);
+    fm.setTarget(false);
     fm.update();
 
 
@@ -156,7 +156,7 @@ public class Robot extends OpMode{
     //telemetry.addLine("");
     //telemetry.addLine("auto state: " + auto);
       telemetry.addLine("");
-      telemetry.addLine("intakeSensorGreen: " + intake.getSensorReading());
+      telemetry.addLine("auto color: " + autoType);
     telemetry.addLine("");
     telemetry.addLine("robot state: " + roboState);
     telemetry.addLine("");

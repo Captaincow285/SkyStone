@@ -30,6 +30,9 @@ public class LZAuto extends Robot {
 
   Quarry quarry = new Quarry();
 
+  boolean isRed = true, parkClose = true;
+
+  private int directionSwitch = 1;
 
 
   @Override
@@ -44,6 +47,8 @@ public class LZAuto extends Robot {
     quarry.populateQuarry();
 
     setPose(0,0, 0);
+
+    autoStateLZ = LZStates.START;
 
   }
 
@@ -60,6 +65,20 @@ public class LZAuto extends Robot {
     setPose(0,0, 0);
 
     intake.setUsingSensor(true);
+
+    if(gamepad1.left_bumper){
+        isRed = true;
+    } else if(gamepad1.right_bumper){
+        isRed = false;
+    }
+
+    if(gamepad1.left_trigger >= 0.01){
+        parkClose = true;
+    } else if(gamepad1.right_trigger >= 0.01){
+        parkClose = false;
+    }
+
+
   }
 
   @Override
@@ -74,6 +93,10 @@ public class LZAuto extends Robot {
         roboState = RobotStates.STOPPED;
         autoStateLZ = LZStates.MOVE_TO_SS_1;
           setPose(0,0, 0);
+          //dt.setSlowmode(0.3);
+
+          directionSwitch = isRed ? -1 : 1;
+
 
         break;
       }
@@ -90,9 +113,13 @@ public class LZAuto extends Robot {
 
          */
 
-        dt.setTarget(new Point(93, 0));
-        if(Math.abs(93 - worldXPosition)<= 2){
+
+        dt.setTarget(new Point(3 * directionSwitch, 55));
+        if(Math.abs(55 - worldYPosition)<= 2){
             autoStateLZ = LZStates.GRAB_SS_1;
+
+            break;
+            //dt.setSlowmode(0.5);
         }
 
         break;
@@ -100,10 +127,14 @@ public class LZAuto extends Robot {
 
       case GRAB_SS_1: {
 
-        intake.setTarget(-1);
-        dt.setTarget(new Point(93, -10));
-        if(Math.abs(-10 - worldYPosition)<= 1.5){
-              autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
+          intake.setTarget(-1);
+          dt.setTarget(new Point( directionSwitch * 100, 55));
+
+        if(Math.abs((directionSwitch * 100) - worldXPosition)<= 2 && Math.abs(55 - worldYPosition)<= 2){
+
+
+              autoStateLZ = LZStates.MOVE_TO_SS_2;
+              break;
         }
 
 
@@ -111,16 +142,44 @@ public class LZAuto extends Robot {
         break;
       }
 
-      case MOVE_TO_FOUNDATION:{
+        case MOVE_TO_SS_2:{
+
+            dt.setTarget(new Point(directionSwitch * 100, 30));
+
+            if(intake.isBlockIntaked() || Math.abs(30 - worldYPosition)<= 2){
+
+
+                autoStateLZ = LZStates.GRAB_SS_2;
+                break;
+            }
+            break;
+
+        }
+
+        case GRAB_SS_2:{
 
           //if(Math.abs(50 - worldXPosition)<= 2){
             //  dt.setTarget(new Point(50, 50));
           //}
 
-          dt.setTarget(new Point(50, 0));
+          dt.setTarget(new Point(directionSwitch * 3, 30));
+          if((Math.abs(directionSwitch * 3 - worldXPosition)<= 2 && Math.abs(30 - worldYPosition)<= 2)){
+              autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
+          }
 
         break;
       }
+
+        case MOVE_TO_FOUNDATION:{
+
+            dt.setTarget(new Point(directionSwitch * 3, -100));
+            if((Math.abs((directionSwitch * 3) - worldXPosition)<= 2 && Math.abs(-100 - worldYPosition)<= 2)){
+                intake.setTarget(1);
+                autoStateLZ = LZStates.MOVE_TO_SS_1;
+            }
+
+            break;
+        }
 
       case END: {
 
@@ -132,7 +191,7 @@ public class LZAuto extends Robot {
 
     }
 
-    telemetry.addLine("stone position: " + quarry.getRoughStonePosition(4));
+    //telemetry.addLine("stone position: " + quarry.getRoughStonePosition(4));
 
 
   }

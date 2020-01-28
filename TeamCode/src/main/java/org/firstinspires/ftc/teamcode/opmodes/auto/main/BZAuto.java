@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import static org.firstinspires.ftc.teamcode.lib.movement.Pose.setPose;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.*;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.LZStates.END;
+import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.LZStates.PARK_FAR;
 import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.LZStates.PARK_NEAR;
 
 //@Config
@@ -37,7 +38,7 @@ public class BZAuto extends Robot {
 
     ElapsedTime timer = new ElapsedTime();
 
-
+    boolean parkFar = false;
 
 
     @Override
@@ -48,9 +49,11 @@ public class BZAuto extends Robot {
         //setPose((ROBOT_WIDTH/2),81.28,0);
 
         isAuto(true);
+        fm.setTarget(false);
 
         //quarry.populateQuarry();
 
+        autoStateLZ = LZStates.START;
 
         timer.reset();
     }
@@ -66,8 +69,23 @@ public class BZAuto extends Robot {
         super.init_loop();
 
         setPose(0,0, 0);
-        fm.setTarget(true);
+        fm.setTarget(false);
         autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
+
+        if(gamepad1.y){
+            autoType = AutoType.RED;
+        } else if(gamepad1.x){
+            autoType = AutoType.BLUE;
+
+        }
+
+        if(gamepad1.right_bumper){
+            parkFar = true;
+
+
+        } else if(gamepad1.left_bumper){
+            parkFar = false;
+        }
     }
 
     @Override
@@ -81,7 +99,7 @@ public class BZAuto extends Robot {
 
                 roboState = RobotStates.STOPPED;
                 autoStateLZ = LZStates.MOVE_TO_FOUNDATION;
-                fm.setTarget(true);
+                fm.setTarget(false);
                 roboState = RobotStates.AT_TARGET;
                 setPose(0, 0, 0);
                 depositor.setTarget(1);
@@ -93,12 +111,12 @@ public class BZAuto extends Robot {
             case MOVE_TO_FOUNDATION: {
 
 
-                dt.setTarget(new Point(-38, 71));
-                if (Math.abs(-38 - worldXPosition) <= 2 && Math.abs(71 - worldYPosition) <= 2) {
+                dt.setTarget(new Point(-35, 80));
+                if (Math.abs(-35 - worldXPosition) <= 2 && Math.abs(80 - worldYPosition) <= 2) {
                     autoStateLZ = LZStates.MOVE_FOUNDATION;
                     timer.reset();
                 }
-                fm.setTarget(true);
+                fm.setTarget(false);
 
                 break;
             }
@@ -117,12 +135,12 @@ public class BZAuto extends Robot {
                     dt.setTarget(new Point(20, 20));
              */
 
-                fm.setTarget(false);
+                fm.setTarget(true);
 
                 if(timer.seconds() >= 1) {
-                    dt.setTarget(new Point(-38, 3));
-                    if (Math.abs(2 - worldYPosition) <= 2) {
-                        autoStateLZ = PARK_NEAR;
+                    dt.setTarget(new Point(-40, 1));
+                    if ((Math.abs(1 - worldYPosition) <= 2) && (Math.abs(-40 - worldXPosition) <= 3)) {
+                        autoStateLZ = parkFar ? (PARK_FAR) : (PARK_NEAR);
                     }
                 }
                 break;
@@ -133,19 +151,35 @@ public class BZAuto extends Robot {
 
             case PARK_NEAR: {
 
-                fm.setTarget(true);
+                fm.setTarget(false);
 
-                dt.setTarget(new Point(91, 1));
-                if (Math.abs(91 - worldXPosition) <= 2) {
+                dt.setTarget(new Point(79, 3));
+                if (Math.abs(79 - worldXPosition) <= 2) {
+                    stop();
+                }
+                break;
+
+            }
+
+            case PARK_FAR: {
+                fm.setTarget(false);
+
+                dt.setTarget(new Point(42, 3));
+                if (Math.abs(42 - worldXPosition) <= 2) {
                     autoStateLZ = END;
                 }
-
+                break;
             }
 
             case END: {
 
+                dt.setTarget(new Point(42, 60));
+                if (Math.abs(60 - worldYPosition) <= 2) {
+                    dt.setTarget(new Point(67, 60));
+                    //depositor.setTarget(0.4);
 
-                stop();
+                }
+
                 break;
 
             }

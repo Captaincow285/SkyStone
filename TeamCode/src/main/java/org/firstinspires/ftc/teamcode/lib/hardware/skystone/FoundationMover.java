@@ -23,8 +23,8 @@ public class FoundationMover extends Subsystem {
 
     @Override
     public void update() {
-        left.setPosition(targetPosition);
-        right.setPosition(1 - targetPosition);
+        left.setPosition(1 - targetPosition);
+        right.setPosition(targetPosition);
     }
 
     public void setTarget(boolean isUp){

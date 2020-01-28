@@ -50,7 +50,7 @@ public class Basic extends Robot {
 
 
 
-        intake.setTarget(gamepad1.left_trigger - gamepad1.right_trigger);
+        intake.setTarget(gamepad1.left_trigger - gamepad1.right_trigger, gamepad2.left_trigger >= 0.01);
         if(gamepad1.y){
             intake.setUsingSensor(true);
         } else if(gamepad1.x){
@@ -59,8 +59,10 @@ public class Basic extends Robot {
 
         if(gamepad1.left_bumper){
             fm.setTarget(false);
+            //dt.setSlowmode(1);
         } else if(gamepad1.right_bumper){
             fm.setTarget(true);
+            //dt.setSlowmode(0.4);
         }
 
         elevator.setTarget(gamepad2.right_stick_y);
@@ -69,15 +71,15 @@ public class Basic extends Robot {
 
         if(gamepad2.right_trigger >= 0.01){
             depositor.setTarget(0.4);
+            dt.setSlowmode(0.5);
         } else {
             depositor.setTarget(1);
+            dt.setSlowmode(1);
         }
 
         if(gamepad2.right_bumper){
             clamp.setTarget(GlobalVars.ClawStates.GRIPPING);
         } else if(gamepad2.left_bumper){
-            clamp.setTarget(GlobalVars.ClawStates.DEPOSITING);
-        } else if(gamepad2.right_stick_button){
             clamp.setTarget(GlobalVars.ClawStates.IDLE);
         }
 

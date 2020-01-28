@@ -41,7 +41,7 @@ public class DriveTrain{
   //last update time
   private long lastUpdateTime = 0;
 
-  private double maxMotorPowerAuto = 0.4;
+  private double maxMotorPowerAuto = 0.4, maxMotorPowerManual = 1;
 
   //pid controller objects
   public static PIDController PIDx = new PIDController(xKp, xKi, xKd);
@@ -168,12 +168,16 @@ public class DriveTrain{
         bl.setPower(Range.clip(motorPowers[2], -maxMotorPowerAuto, maxMotorPowerAuto));
         br.setPower(Range.clip(motorPowers[3], -maxMotorPowerAuto, maxMotorPowerAuto));
     } else {
-        fl.setPower(Range.clip(motorPowers[0], -1, 1));
-        fr.setPower(Range.clip(motorPowers[1], -1, 1));
-        bl.setPower(Range.clip(motorPowers[2], -1, 1));
-        br.setPower(Range.clip(motorPowers[3], -1, 1));
+        fl.setPower(Range.clip(motorPowers[0], -1, 1) * maxMotorPowerManual);
+        fr.setPower(Range.clip(motorPowers[1], -1, 1) * maxMotorPowerManual);
+        bl.setPower(Range.clip(motorPowers[2], -1, 1) * maxMotorPowerManual);
+        br.setPower(Range.clip(motorPowers[3], -1, 1) * maxMotorPowerManual);
     }
 
+  }
+
+  public void setSlowmode(double maxPower){
+      maxMotorPowerManual = maxPower;
   }
 
   public void applyMovement(double lx, double ly, double rx){
@@ -248,6 +252,10 @@ public class DriveTrain{
 
   }
 
+  public void setAngleTarget(double angle){
+      aTarget = angle;
+  }
+
   /**
    * gets the rotation of the imu
    * @param unit angle unit, degrees or radians
@@ -255,6 +263,10 @@ public class DriveTrain{
    */
   public double getGyroRotation(AngleUnit unit) {
     return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, unit).firstAngle;
+  }
+
+  public void setMaxMotorPowerAuto(double power){
+      maxMotorPowerAuto = power;
   }
 
 }
