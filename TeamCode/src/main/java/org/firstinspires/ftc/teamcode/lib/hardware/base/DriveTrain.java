@@ -102,8 +102,6 @@ public class DriveTrain{
     parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
     imu.initialize(parameters);
 
-
-
   }
 
     /**
@@ -267,6 +265,10 @@ public class DriveTrain{
 
   public void setMaxMotorPowerAuto(double power){
       maxMotorPowerAuto = power;
+  }
+
+  public String getTargetString(){
+      return ("(" + xTarget + ", " + yTarget + ", " + aTarget + ")");
   }
 
 }

@@ -14,6 +14,8 @@ import static org.firstinspires.ftc.teamcode.lib.util.GlobalVars.wyRelative;
  */
 public class Pose{
 
+    public static Pose zero = new Pose(0,0,0);
+
     public static double x, y, a;
 
     private static double circumfrenceOfWheel = 15.71;//cm
@@ -112,4 +114,61 @@ public class Pose{
         wheelAuxLast = wheelAuxCurrent;
 
     }
+
+    /**
+     * Updates our position on the field using the change from the encoders
+     */
+    public static void PosCalc(double y, double x, double a){
+
+        double wheelRightCurrent = y;
+        double wheelAuxCurrent = -x;
+
+        double wheelRightDelta = wheelRightCurrent - wheelRightLast;
+        double wheelAuxDelta = wheelAuxCurrent - wheelAuxLast;
+
+        double rightDeltaCM = wheelRightDelta * cmPerTick;
+        double auxDeltaCM = wheelAuxDelta * cmPerTick;
+
+        deltaX = rightDeltaCM;
+        deltaY = auxDeltaCM;
+
+        //save the last positions for later
+        wheelRightLast = wheelRightCurrent;
+        wheelAuxLast = wheelAuxCurrent;
+
+        worldAngle_rad = a;
+
+        double angleIncrement = a - lastAngle;
+
+        if(Math.abs(angleIncrement) > 0){
+            //gets the radius of the turn we are in
+            double radiusOfMovement = deltaY / angleIncrement;
+            //get the radius of our straifing circle
+            double radiusOfStraif = deltaX/angleIncrement;
+
+
+
+
+
+            deltaY = (radiusOfMovement * Math.sin(angleIncrement)) - (radiusOfStraif * (1 - Math.cos(angleIncrement)));
+
+            deltaX = radiusOfMovement * (1 - Math.cos(angleIncrement)) + (radiusOfStraif * Math.sin(angleIncrement));
+
+        }
+
+
+
+        worldXPosition += (Math.cos(lastAngle) * deltaY) + (Math.sin(lastAngle) *
+                deltaX);
+        worldYPosition += (Math.sin(lastAngle) * deltaY) - (Math.cos(lastAngle) *
+                deltaX);
+
+
+        wheelRightLast = wheelRightCurrent;
+        wheelAuxLast = wheelAuxCurrent;
+
+
+        lastAngle = a;
+    }
+
 }
