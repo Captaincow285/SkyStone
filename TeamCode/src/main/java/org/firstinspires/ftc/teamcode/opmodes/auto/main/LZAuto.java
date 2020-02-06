@@ -182,7 +182,7 @@ public class LZAuto extends Robot {
             dt.setTarget(new Point(directionSwitch * 3, -125));
             if((Math.abs((directionSwitch * 3) - worldXPosition)<= 2 && Math.abs(-125 - worldYPosition)<= 2)){
                 intake.setTarget(1);
-                autoStateLZ = LZStates.MOVE_TO_SS_1;
+                autoStateLZ = LZStates.END;
                 timer.reset();
             }
 
@@ -190,6 +190,13 @@ public class LZAuto extends Robot {
         }
 
       case END: {
+
+          dt.setTarget(new Point(directionSwitch * 3, -98));
+          if((Math.abs((directionSwitch * 3) - worldXPosition)<= 2 && Math.abs(-98 - worldYPosition)<= 2)){
+              intake.setTarget(1);
+              autoStateLZ = LZStates.MOVE_TO_SS_1;
+              timer.reset();
+          }
 
         stop();
         break;

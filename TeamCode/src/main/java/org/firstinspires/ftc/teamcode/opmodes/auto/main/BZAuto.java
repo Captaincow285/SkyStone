@@ -35,6 +35,7 @@ public class BZAuto extends Robot {
     //FtcDashboard dashboard = FtcDashboard.getInstance();
     //Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
+    private int directionalSwitch = -1;
 
     ElapsedTime timer = new ElapsedTime();
 
@@ -74,8 +75,10 @@ public class BZAuto extends Robot {
 
         if(gamepad1.y){
             autoType = AutoType.RED;
+            directionalSwitch = 1;
         } else if(gamepad1.x){
             autoType = AutoType.BLUE;
+            directionalSwitch = -1;
 
         }
 
@@ -111,8 +114,8 @@ public class BZAuto extends Robot {
             case MOVE_TO_FOUNDATION: {
 
 
-                dt.setTarget(new Point(-35, 80));
-                if (Math.abs(-35 - worldXPosition) <= 2 && Math.abs(80 - worldYPosition) <= 2) {
+                dt.setTarget(new Point(directionalSwitch * 35, 80));
+                if (Math.abs(directionalSwitch * 35 - worldXPosition) <= 2 && Math.abs(80 - worldYPosition) <= 2) {
                     autoStateLZ = LZStates.MOVE_FOUNDATION;
                     timer.reset();
                 }
@@ -138,8 +141,8 @@ public class BZAuto extends Robot {
                 fm.setTarget(true);
 
                 if(timer.seconds() >= 1) {
-                    dt.setTarget(new Point(-40, 1));
-                    if ((Math.abs(1 - worldYPosition) <= 2) && (Math.abs(-40 - worldXPosition) <= 3)) {
+                    dt.setTarget(new Point(directionalSwitch * 40, 1));
+                    if ((Math.abs(1 - worldYPosition) <= 2) && (Math.abs(directionalSwitch * 40 - worldXPosition) <= 3)) {
                         autoStateLZ = parkFar ? (PARK_FAR) : (PARK_NEAR);
                     }
                 }
@@ -153,8 +156,8 @@ public class BZAuto extends Robot {
 
                 fm.setTarget(false);
 
-                dt.setTarget(new Point(79, 3));
-                if (Math.abs(79 - worldXPosition) <= 2) {
+                dt.setTarget(new Point(directionalSwitch * -79, 3));
+                if (Math.abs(directionalSwitch * 79 - worldXPosition) <= 2) {
                     stop();
                 }
                 break;
@@ -164,8 +167,8 @@ public class BZAuto extends Robot {
             case PARK_FAR: {
                 fm.setTarget(false);
 
-                dt.setTarget(new Point(42, 3));
-                if (Math.abs(42 - worldXPosition) <= 2) {
+                dt.setTarget(new Point(directionalSwitch * -42, 3));
+                if (Math.abs(directionalSwitch * -42 - worldXPosition) <= 2) {
                     autoStateLZ = END;
                 }
                 break;
@@ -173,9 +176,9 @@ public class BZAuto extends Robot {
 
             case END: {
 
-                dt.setTarget(new Point(42, 60));
+                dt.setTarget(new Point(directionalSwitch * -42, 60));
                 if (Math.abs(60 - worldYPosition) <= 2) {
-                    dt.setTarget(new Point(67, 60));
+                    dt.setTarget(new Point(directionalSwitch * 67, 60));
                     //depositor.setTarget(0.4);
 
                 }
